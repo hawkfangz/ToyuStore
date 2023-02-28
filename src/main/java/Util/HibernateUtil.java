@@ -47,7 +47,6 @@ public class HibernateUtil {
         conf.addAnnotatedClass(Manufacturer.class);
         conf.addAnnotatedClass(CartItem.class);
         conf.addAnnotatedClass(User.class);
-        conf.addAnnotatedClass(Admin.class);
 
         ServiceRegistry registry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
 
