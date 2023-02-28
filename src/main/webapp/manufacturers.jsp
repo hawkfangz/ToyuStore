@@ -80,7 +80,10 @@
                         <td>${manufacturer.name}</td>
                         <td>${manufacturer.country}</td>
                         <td>${manufacturer.status}</td>
-                        <td> <a class="btn btn-primary" href="manufacturers?action=toggle&id=${manufacturer.id}">Toggle</a></td>
+                        <td> 
+                            <a class="btn btn-primary" href="manufacturers?action=toggle&id=${manufacturer.id}">Toggle</a>
+                            <a class="btn btn-primary" href="manufacturers?action=edit&id=${manufacturer.id}">Edit</a>
+                        </td>
                     </tr>
                     <%--</c:if>--%>
                 </c:forEach>

@@ -8,6 +8,7 @@ import Entity.Admin;
 import Manager.AdminManager;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,26 +35,32 @@ public class AdminController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         HttpSession session = request.getSession();
-        
+
         String destinate = "login_admin.jsp";
         String account = request.getParameter("account");
         String password = request.getParameter("password");
-//hau admin
+        String action = request.getParameter("action");
+        //hau admin
         if (session.getAttribute("admin") == null && account == null) {
-            destinate ="login_admin.jsp";
-        } else {
-            AdminManager adminManager = new AdminManager();
-            
-            Admin admin = adminManager.login(account, password);
-            
-            if (admin != null) {
-                session.setAttribute("admin", admin);
-                destinate = "Product";
+            destinate = "login_admin.jsp";
+        }
+        if (action != null) {
+            if (action.equals("login")) {
+                AdminManager adminManager = new AdminManager();
+
+                Admin admin = adminManager.login(account, password);
+
+                if (admin != null) {
+                    session.setAttribute("admin", admin);
+                    destinate = "admin-menu";
+                }
             }
         }
         response.sendRedirect(destinate);
+//        RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinate);
+//        requestDispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

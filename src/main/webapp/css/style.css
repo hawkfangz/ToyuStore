@@ -13,8 +13,13 @@ form{
 .product-detail.media .img-container{
     width: 250px;
     height: 250px;
-    margin-right: 100px
+    margin-right: 100px;
 }
+.user-btn{
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
 #previewImage {
   max-width: 250px;
   max-height: 250px;

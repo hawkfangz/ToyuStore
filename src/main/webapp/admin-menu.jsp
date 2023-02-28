@@ -1,12 +1,7 @@
-<%-- 
-    Document   : manufacturer-form
-    Created on : Feb 26, 2023, 1:14:40 PM
-    Author     : phanh
---%>
-
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -36,7 +31,7 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav ">
                                     <li class="nav-item ">
-                                        <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
+                                        <a class="nav-link" href="index.jsp">Home</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="about.jsp"> About</a>
@@ -58,77 +53,22 @@
             </header>
         </div>
         <!-- end header section code start here-->
+
+        <c:if test="${empty sessionScope.admin}">
+            <c:redirect url="admin" />
+        </c:if>
+
         <div class="container">
+            <a class="btn btn-success user-btn" href="Product">Products</a><br>
+            <a class="btn btn-success user-btn" href="types">Product Types</a><br>
+            <a class="btn btn-success user-btn" href="manufacturers">Manufacturers</a><br>
+        </div>
 
 
-            <c:if test="${param.action == 'create'}">
-                <h2>Create</h2>
-                <form method="post" action="manufacturers">
-                    <div class="form-group">
-                        <label for="description">Name</label>
-                        <input class="form-control" name="name" id="description" value=""></input>
-                    </div>
-                    <div class="form-group">
-                        <label for="countrySelect">Select a Country:</label>
-                        <select class="form-control" id="countrySelect" name="country">
-                            <!--<option value="">--Select--</option>-->
-                            <option value="Australia">Australia</option>
-                            <option value="Canada">Canada</option>
-                            <option value="China">China</option>
-                            <option value="France">France</option>
-                            <option value="Germany">Germany</option>
-                            <option value="Japan">Japan</option>
-                            <option value="United Kingdom">United Kingdom</option>
-                            <option value="United States">United States</option>
-                            <option value="Vietnam">Vietnam</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input name="status" type="checkbox" id="enable-checkbox" checked>
-                            <span id="enable-text">Status: Enable</span>
-                        </label>
-                    </div>
-                    <input type="hidden" name="action" value="do-create">
-                    <button type="submit" class="btn btn-primary btn-lg">Create</button>
-                </form>
-            </c:if>
-            <c:if test="${param.action == 'edit'}">
-                <c:set var="object" value="${manufacturer}" />
-                <h2>Create</h2>
-                <form method="post" action="manufacturers">
-                    <div class="form-group">
-                        <label for="description">Name</label>
-                        <input class="form-control" name="name" id="description" value="${manufacturer.name}"></input>
-                    </div>
-                    <div class="form-group">
-                        <label for="countrySelect">Select a Country:</label>
-                        <select class="form-control" id="countrySelect" name="country">
-                            <!--<option value="">--Select--</option>-->
-                            <option value="Australia">Australia</option>
-                            <option value="Canada">Canada</option>
-                            <option value="China">China</option>
-                            <option value="France">France</option>
-                            <option value="Germany">Germany</option>
-                            <option value="Japan">Japan</option>
-                            <option value="United Kingdom">United Kingdom</option>
-                            <option value="United States">United States</option>
-                            <option value="Vietnam">Vietnam</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>
-                            <input name="status" type="checkbox" id="enable-checkbox" checked>
-                            <span id="enable-text">Status: Enable</span>
-                        </label>
-                    </div>
-                    <input type="hidden" name="action" value="do-edit">
-                    <input type="hidden" name="id" value="${manufacturer.id}">
-                    <button type="submit" class="btn btn-primary btn-lg">Edit</button>
-                </form>
-            </c:if>
 
-        </div>        <!-- info section -->
+
+
+        <!-- info section -->
         <section class="info_section ">
             <div class="container">
                 <div class="row">
@@ -250,14 +190,6 @@
         <script src="js/bootstrap.js"></script>
         <!-- custom js -->
         <script src="js/custom.js"></script>
-        <c:if test="${param.action == 'edit'}">
-            <c:set var="object" value="${manufacturer}" />
-            <script>
-                $(document).ready(function () {
-                    $("#countrySelect").val("${manufacturer.country}");
-                });
-            </script>
-        </c:if>
+
     </body>
 </html>
-

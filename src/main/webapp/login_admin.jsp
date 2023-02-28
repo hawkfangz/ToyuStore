@@ -64,6 +64,7 @@
                     </div>
                     <div class="card-body">
                         <form action="admin" method="POST">
+                            <input type="hidden" name="action" value="login">
                             <div class="form-group">
                                 <label for="account">Account</label>
                                 <input name ="account" type="text" class="form-control" id="account" placeholder="Enter Account">

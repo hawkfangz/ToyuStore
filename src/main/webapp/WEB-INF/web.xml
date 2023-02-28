@@ -35,6 +35,16 @@
         <servlet-name>login</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
+        <servlet>
+        <servlet-name>admin-menu</servlet-name>
+        <jsp-file>/admin-menu.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin-menu</servlet-name>
+        <url-pattern>/admin-menu</url-pattern>
+    </servlet-mapping>
+    
+    
     <session-config>
         <session-timeout>
            60

@@ -55,7 +55,7 @@ public class ManufacturersController extends HttpServlet {
                 request.setAttribute("manufacturerList", manuList);
             }
             if (action != null) {
-                if (action.equals("create")) {
+                if (action.equals("create") || action.equals("edit")) {
                     destinate = "manufacturer-form.jsp";
                 }
                 if (action.equals("do-create")) {
@@ -72,9 +72,28 @@ public class ManufacturersController extends HttpServlet {
                     id = Integer.parseInt(request.getParameter("id"));
                     manuManager.toggle(id);
                 }
+                if (action.equals("edit")) {
+                    id = Integer.parseInt(request.getParameter("id"));
+                    Manufacturer manufacturer = manuManager.getManufacturer(id);
+                    System.out.println(manufacturer.getCountry());
+                    request.setAttribute("manufacturer", manufacturer);
+                }
+                if (action.equals("do-edit")) {
+                    id = Integer.parseInt(request.getParameter("id"));
+                    name = request.getParameter("name");
+                    country = request.getParameter("country");
+                    String statusP = request.getParameter("status");
+                    int status = 0;
+                    if (statusP != null) {
+                        status = 1;
+                    }
+                    manuManager.editManufacturer(id, name, country, status);
+                    destinate = "manufacturers.jsp";
+                }
             }
 
             request.setAttribute("title", title);
+            System.out.println(destinate);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinate);
             requestDispatcher.forward(request, response);
         }

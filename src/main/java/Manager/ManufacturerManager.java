@@ -74,5 +74,38 @@ public class ManufacturerManager {
             session.close();
         }
     }
+    public Manufacturer getManufacturer(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Manufacturer manufacturer;
+        try {
+            manufacturer = session.load(Manufacturer.class, id);
+
+            return manufacturer;
+        } finally {
+            session.close();
+        }
+    }
+    
+    public void editManufacturer(int id,String name, String country, int status) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            Manufacturer manufacturer = session.load(Manufacturer.class, id);
+            manufacturer.setCountry(country);
+            manufacturer.setName(name);
+            manufacturer.setStatus(status);
+
+            session.update(manufacturer);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
 
 }
