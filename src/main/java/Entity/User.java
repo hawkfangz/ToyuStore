@@ -36,9 +36,10 @@ public class User implements Serializable {
     private String phone;
     private String email;
     private String address;
+    private int status;
 
     public User() {
-
+        status = 1;
     }
 
     public int getCustomerId() {
@@ -48,7 +49,6 @@ public class User implements Serializable {
 //    public void setCustomerId(int customerId) {
 //        this.customerId = customerId;
 //    }
-
     public String getAccount() {
         return account;
     }
@@ -113,4 +113,11 @@ public class User implements Serializable {
         this.address = address;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }

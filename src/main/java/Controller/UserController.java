@@ -9,6 +9,7 @@ import Entity.User;
 import Manager.UserManager;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,22 +41,46 @@ public class UserController extends HttpServlet {
 
         String account = request.getParameter("account");
         String password = request.getParameter("password");
+        String action = request.getParameter("action");
         String destinate = "login.jsp";
         User user;
 
         UserManager userManager = new UserManager();
+        if (action != null) {
+            System.out.println(action);
+            if (action.equals("login")) {
+                user = userManager.getCustomer(account, password);
+                if (user != null) {
+                    session.setAttribute("user", user);
+                    Cart userCart = userCart = new Cart();
+                    session.setAttribute("cart", userCart);
+                    destinate = "user.jsp";
+                } else {
+                    request.setAttribute("message", "account or password wrong, please try again!");
+                    destinate = "login.jsp";
+                }
+            }
+            if (action.equals("signup")) {
+                String name = request.getParameter("name");
+                String address = request.getParameter("address");
+                String dob = request.getParameter("dob");
+                String phone = request.getParameter("phone");
+                String gender = request.getParameter("gender");
+                LocalDate dateOfBirth = LocalDate.parse(dob);
 
-        if (account != null && password != null) {
-            user = userManager.getCustomer(account, password);
-            if (user != null) {
-                session.setAttribute("user", "user");
-                Cart userCart = userCart = new Cart();
-                session.setAttribute("cart", userCart);
-                destinate = "user.jsp";
-            } else {
-                request.setAttribute("message", "account or password wrong, please try again!");
-                destinate = "login.jsp";
+//                user.setAccount(account);
+//                user.setPassword(password);
+//                user.setName(name);
+//                user.setPhone(phone);
+//                user.setEmail(phone);
+//                user.setDob(dateOfBirth);
+//                user.setAddress(address);
+//                user.setGender(gender);
 
+                if (userManager.signUp(account, password, name, phone, dateOfBirth, address, gender)) {
+                    destinate = "login";
+                    request.setAttribute("message", "Sign up Success, please login!");
+                }
             }
         }
 

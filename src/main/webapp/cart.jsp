@@ -83,7 +83,7 @@
                         <div class="col-md-8">
                             <h5 class="mb-1">${item.name}</h5>
                             <p class="mb-2">${item.quantity}</p>
-                            <p class="mb-2">Price: $10.00</p>
+                            <p class="mb-2">$ ${item.price}</p>
                             <form action="removeFromCart" method="post">
                                 <input type="hidden" name="productId" value="1">
                                 <button type="submit" class="btn btn-danger btn-sm">Remove from Cart</button>
@@ -91,6 +91,7 @@
                         </div>
                     </div>
                 </c:forEach>
+                    <c:out value="${sessionScope.cart.getCartPrice()}"></c:out>
             </c:if>
         </div>
         <!-- info section -->

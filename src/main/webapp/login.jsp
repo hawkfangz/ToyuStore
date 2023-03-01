@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <c:set var="title" value="Admin || Login" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="header.jsp" /> 
 
@@ -57,32 +58,33 @@
         </div>
         <!-- end header section -->
         <div class="container mt-5 login-form">
-        <div class="row">
-            <div class="col-md-4 mx-auto">
-                <div class="card">
-                    <div class="card-header">
-                        Login
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="user">
-                            <div class="form-group">
-                                <label for="account">Account</label>
-                                <input name ="account" type="text" class="form-control" id="account" placeholder="Enter Account">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input name ="password" type="password" class="form-control" id="password" placeholder="Password">
-                            </div>
-                            <div class="form-group">
-                                <label><c:out value="${message}"></c:out></label>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+            <div class="row">
+                <div class="col-md-4 mx-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            Login
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="user">
+                                <div class="form-group">
+                                    <label for="account">Account</label>
+                                    <input name ="account" type="text" class="form-control" id="account" placeholder="Enter Account">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input name ="password" type="password" class="form-control" id="password" placeholder="Password">
+                                </div>
+                                <input type="hidden" name="action" value="login">
+                                <div class="form-group">
+                                    <label><c:out value="${message}"></c:out></label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
 
 
@@ -192,7 +194,7 @@
 
         <!-- end info_section -->
 
-        
+
 
         <!-- footer section -->
         <footer class="footer_section">

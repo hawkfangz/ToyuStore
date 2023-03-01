@@ -1,12 +1,19 @@
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%-- 
+    Document   : signup
+    Created on : Mar 1, 2023, 9:24:06 AM
+    Author     : hawk
+--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="header.jsp" /> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+
+        <title>Detail</title>
     </head>
     <body>
         <div class="hero_area">
@@ -29,7 +36,7 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav ">
                                     <li class="nav-item ">
-                                        <a class="nav-link" href="index.jsp">Home</a>
+                                        <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="about.jsp"> About</a>
@@ -50,73 +57,72 @@
                 </div>
             </header>
         </div>
-        <!-- end header section code start here-->
-
-        <c:if test="${empty sessionScope.admin}">
-            <c:redirect url="admin" />
-        </c:if>
-
-        <div class="container">
-
-        </div>
-
-        <section class="why_us_section layout_padding">
-            <div class="container">
-                <div class="heading_container heading_center">
-                    <h2>
-                        Admin Menu
-                    </h2>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="box ">
-                            <div class="img-box">
-                                <img src="images/w1.png" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    <a class="user-btn" href="Product">Products</a><br>
-                                </h5>
-                                <p>
-                                    Products detail Manager
-                                </p>
-                            </div>
+        <!-- end header section -->
+        <div class="container mt-lg-5 login-form">
+            <div class="row">
+                <div class="col-md-4 mx-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            Sign Up
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="box ">
-                            <div class="img-box">
-                                <img src="images/w2.png" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    <a class="user-btn" href="manufacturers">Manufacturers</a><br>
-                                </h5>
-                                <p>
-                                    Manufacturers and it product
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="box ">
-                            <div class="img-box">
-                                <img src="images/w3.png" alt="">
-                            </div>
-                            <div class="detail-box">
-                                <h5>
-                                    <a class="user-btn" href="types">Product Types</a><br>
-                                </h5>
-                                <p>
-                                    Manage types and it products
-                                </p>
-                            </div>
+                        <div class="card-body">
+                            <form method="POST" action="user">
+                                <input type="hidden" id="action"name="action" value="signup">
+                                <div class="form-group">
+                                    <label for="account">Customer Name:</label>
+                                    <input name ="name" type="text" class="form-control" id="account" placeholder="Enter Account">
+                                </div>
+                                <div class="form-group">
+                                    <label for="account">Account</label>
+                                    <input name ="account" type="text" class="form-control" id="account" placeholder="Enter Account">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password:</label>
+                                    <input class="form-control" type="password" name="password" id="password" required>
+
+                                    <label for="confirmPassword">Confirm Password:</label>
+                                    <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" required onkeyup='checkPasswordMatch();'>
+
+                                    <div id="passwordError" style="color:red;"></div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input name ="email" type="email" class="form-control" id="email" placeholder="haupro@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <select name="gender">
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input name ="address" type="text" class="form-control" id="address" placeholder="Enter Account">
+                                </div>
+                                <label for="datepicker">Date of birth: </label>
+                                <input type="text" id="datepicker" name="dob" class="datepicker" data-date-format="yyyy-mm-dd">
+                                    <div class="form-group">
+                                        <label for="phone-input">Phone Number</label>
+                                        <input type="text" class="form-control" id="phone-input" name="phone" pattern="(03|05|07|08|09)+([0-9]{8})\b" required>
+                                        <div class="invalid-feedback">Please enter a valid Vietnamese phone number.</div>
+                                    </div>
+
+                                <div class="form-group">
+                                    <label><c:out value="${message}"></c:out></label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-
+        </div>
 
 
 
@@ -227,6 +233,7 @@
         <!-- end info_section -->
 
 
+
         <!-- footer section -->
         <footer class="footer_section">
             <div class="container">
@@ -244,6 +251,26 @@
         <script src="js/bootstrap.js"></script>
         <!-- custom js -->
         <script src="js/custom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <script>
+                                        $(document).ready(function () {
+                                            $('.datepicker').datepicker();
+                                        });
+        </script>
+        <script>
+
+            function checkPasswordMatch() {
+                var password = $("#password").val();
+                var confirmPassword = $("#confirmPassword").val();
+                if (password != confirmPassword) {
+                    $("#passwordError").html("Passwords do not match.");
+                } else {
+                    $("#passwordError").html("");
+                }
+            }
+
+        </script>
 
     </body>
+
 </html>

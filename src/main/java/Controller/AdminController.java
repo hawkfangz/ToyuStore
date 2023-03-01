@@ -58,9 +58,10 @@ public class AdminController extends HttpServlet {
                 }
             }
         }
-        response.sendRedirect(destinate);
-//        RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinate);
-//        requestDispatcher.forward(request, response);
+        request.setAttribute("title", "Admin");
+//        response.sendRedirect(destinate);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinate);
+        requestDispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

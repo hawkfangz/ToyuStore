@@ -31,7 +31,7 @@ public class Cart {
         float total = 0;
 
         for (CartItem item : cart) {
-            total += item.getPrice() * item.getQuantity();
+            total += item.getPrice(); //* item.getQuantity();
         }
 
         return total;
