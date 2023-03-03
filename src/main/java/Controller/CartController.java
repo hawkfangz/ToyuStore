@@ -6,7 +6,10 @@ package Controller;
 
 import Entity.Cart;
 import Entity.CartItem;
+import Entity.Order;
 import Entity.Product;
+import Entity.User;
+import Manager.OrderManager;
 import Manager.ProductManager;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -40,13 +43,17 @@ public class CartController extends HttpServlet {
 
         Cart userCart;
 
-        String id;
+        String title;
         String action;
         int productId;
 
         String destinate = "cart.jsp";
 
         Product product;
+        OrderManager orderManager;
+        ProductManager productManager;
+        User user = null;
+        Order order;
 
         action = request.getParameter("action");
 
@@ -54,38 +61,40 @@ public class CartController extends HttpServlet {
             action = "";
         }
         userCart = (Cart) session.getAttribute("cart");
-
-        synchronized (session) {
-            if (session.getAttribute("user") != null && userCart != null) {
-
-                ProductManager productManager = new ProductManager();
-                if (action.equals("add")) {
-
-                    productId = Integer.parseInt(request.getParameter("id"));
-                    product = productManager.getProduct(productId);
-                    CartItem item = new CartItem();
-                    item.setProduct(product);
-                    userCart.addItem(item);
-                    session.setAttribute("cart", userCart);
-//                  session.setAttribute("userItemList", userCart.getCart());
-//                  System.out.println(userCart.getCart().size());
-                    System.out.println("=====");
-                    for (CartItem item2 : userCart.getCart()) {
-                        System.out.println(item2);
-                    }
-
-//                    List<CartItem> itemOrder = (List<CartItem>) session.getAttribute("userItemList");
-//                    System.out.println("SIZE IS"+itemOrder.size());
-                }
-            } else {
-                destinate = "login";
-            }
+        user = (User) session.getAttribute("user");
+        System.out.println(action);
+        if (userCart == null) {
+            session.setAttribute("cart", new Cart());
         }
-        response.sendRedirect(destinate);
 
-//        RequestDispatcher rd = request.getRequestDispatcher(destinate);
-//        
-//        rd.forward(request, response);
+        if (user != null && userCart != null) {
+            System.out.println(action);
+            productManager = new ProductManager();
+            if (action.equals("add")) {
+
+                productId = Integer.parseInt(request.getParameter("id"));
+                product = productManager.getProduct(productId);
+                CartItem item = new CartItem();
+                item.setProduct(product);
+                userCart.addItem(item);
+                session.setAttribute("cart", userCart);
+            }
+            if (action.equalsIgnoreCase("remove")) {
+                productId = Integer.parseInt(request.getParameter("id"));
+                userCart.removeItem(productId);
+            }
+            if (action.equalsIgnoreCase("place")) {
+                orderManager = new OrderManager();
+                order = orderManager.CreateOrder(user, userCart);
+                orderManager.addItemsToOrder(order, userCart);
+                destinate = "order";
+            }
+
+        } else {
+            destinate = "login";
+        }
+
+        response.sendRedirect(destinate);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

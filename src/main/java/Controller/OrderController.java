@@ -4,8 +4,9 @@
  */
 package Controller;
 
-import Entity.Product;
-import Manager.ProductManager;
+import Entity.Order;
+import Entity.User;
+import Manager.OrderManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -15,13 +16,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author phanh
  */
-@WebServlet(name = "home", urlPatterns = {"/home"})
-public class HomeController extends HttpServlet {
+@WebServlet(name = "order", urlPatterns = {"/order"})
+public class OrderController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +37,25 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ProductManager productManager = new ProductManager();
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        String action = request.getParameter("action");
+//        String orderId = request.getParameter("id");
+        String destinate = "orders.jsp";
+        OrderManager orderManager = new OrderManager();
 
-        List<Product> productList = null;
-
-        productList = productManager.getActiveProducts();
-        request.setAttribute("productList", productList);
-        request.setAttribute("title", "Home");
-
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-
-        rd.forward(request, response);//method may be include or forward  
-
+        if (action == null) {
+            action = "";
+        }
+        
+        if (user != null) {
+            List<Order> userOrders = orderManager.getUserOrders(user);
+            System.out.println(userOrders.size());
+            request.setAttribute("orders", userOrders);
+        }
+        
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinate);
+        requestDispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

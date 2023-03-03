@@ -6,11 +6,13 @@ package Entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
@@ -36,6 +38,10 @@ public class User implements Serializable {
     private String phone;
     private String email;
     private String address;
+
+    @OneToMany(mappedBy = "customerId")
+    private Set<Order> orders;
+
     private int status;
 
     public User() {
@@ -64,6 +70,7 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public String getName() {
         return name;
@@ -111,6 +118,14 @@ public class User implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     public int getStatus() {

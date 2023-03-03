@@ -161,7 +161,7 @@
                                 Information
                             </h5>
                             <p>
-                                Eligendi sunt, provident, debitis nemo, facilis cupiditate velit libero dolorum aperiam enim nulla iste maxime corrupti ad illo libero minus.
+                                The site launched around March 2023 since the author can't find good official source to buy collectibles so he himself try to become one.
                             </p>
                         </div>
                     </div>

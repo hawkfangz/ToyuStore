@@ -1,11 +1,21 @@
-<!DOCTYPE html>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<html>
-    <c:set var="title" value="About" scope="request"/>
-    <jsp:include page="header.jsp" />
-    <body class="sub_page">
+<%-- 
+    Document   : orders
+    Created on : Mar 3, 2023, 6:38:07 PM
+    Author     : phanh
+--%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <jsp:include page="header.jsp" /> 
+
+        <title>Detail</title>
+    </head>
+    <body>
         <div class="hero_area">
             <!-- header section strats -->
             <header class="header_section">
@@ -28,10 +38,10 @@
                                     <li class="nav-item ">
                                         <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
                                     </li>
-                                    <li class="nav-item active">
+                                    <li class="nav-item">
                                         <a class="nav-link" href="about.jsp"> About</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item active">
                                         <a class="nav-link" href="Product">Products</a>
                                     </li>
                                     <li class="nav-item">
@@ -46,40 +56,33 @@
                     </div>
                 </div>
             </header>
-            <!-- end header section -->
         </div>
-
-        <!-- about section -->
-
-        <section class="about_section">
-            <div class="container-fluid  ">
-                <div class="row">
-                    <div class="col-md-5 ml-auto">
-                        <div class="detail-box pr-md-3">
-                            <div class="heading_container">
-                                <h2>
-                                    We Provide Best For You
-                                </h2>
-                            </div>
-                            <p>
-                                Totam architecto rem beatae veniam, cum officiis adipisci soluta perspiciatis ipsa, expedita maiores quae accusantium. Animi veniam aperiam, necessitatibus mollitia ipsum id optio ipsa odio ab facilis sit labore officia!
-                                Repellat expedita, deserunt eum soluta rem culpa. Aut, necessitatibus cumque. Voluptas consequuntur vitae aperiam animi sint earum, ex unde cupiditate, molestias dolore quos quas possimus eveniet facilis magnam? Vero, dicta.
-                            </p>
-                            <a href="">
-                                Read More
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 px-0">
-                        <div class="img-box">
-                            <img src="images/about-img.jpg" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- end about section -->
+        <!-- end header section code start here-->
+        <div class="container">
+            <br>
+            <table class="table type-table">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Date created</th>
+                        <th>Number of Items</th>
+                        <th>Price</th>
+                        <th>State</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="item" items="${orders}">
+                        <tr>
+                            <td>${item.orderId}</td>
+                            <td>${item.date}</td>
+                            <td>${orders.size()}</td>
+                            <td>${item.price}</td>
+                            <td>${item.status}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
 
         <!-- info section -->
         <section class="info_section ">
@@ -204,7 +207,5 @@
         <!-- custom js -->
         <script src="js/custom.js"></script>
 
-
     </body>
-
 </html>

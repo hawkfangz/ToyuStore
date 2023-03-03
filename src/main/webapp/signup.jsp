@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <c:set var="title" value="Sign Up" scope="request"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="header.jsp" /> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
@@ -93,7 +94,7 @@
                                 </div>
                                 <div class="form-group">
                                     <select name="gender">
-                                        <option value="">Select Gender</option>
+                                        <option value="other">Select Gender</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
                                         <option value="other">Other</option>

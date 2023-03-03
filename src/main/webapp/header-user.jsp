@@ -4,6 +4,7 @@
     Author     : phanh
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="header_top">
     <div class="container-fluid">
@@ -29,18 +30,41 @@
                 </button>
             </from>
             <div class="user_option_box">
-                <a href="" class="account-link">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <span>
-                        My Account
-                    </span>
-                </a>
-                <a href="cart" class="cart-link">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                    <span>
-                        Cart
-                    </span>
-                </a>
+                <c:if test="${sessionScope.user == null}">
+                    <a href="login" class="account-link">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span>
+                            Log in
+                        </span>
+                    </a>
+                    <a href="sign-up" class="account-link">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span>
+                            Sign Up
+                        </span>
+                    </a>
+                </c:if>
+                <c:if test="${sessionScope.user != null}">
+                    <a href="user" class="account-link">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span>
+                            My Account
+                        </span>
+                    </a>
+                    <a href="cart" class="cart-link">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <span>
+                            Cart
+                        </span>
+                    </a>
+                    <a href="user?action=logout" class="account-link">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span>
+                            Log out
+                        </span>
+                    </a>
+                </c:if>
+
             </div>
         </div>
     </div>

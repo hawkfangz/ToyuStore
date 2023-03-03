@@ -50,7 +50,7 @@ public class ProductManager {
             Query<Product> query = session.createQuery("FROM Product");
 
             List<Product> products = query.list();
-
+            products.sort((product1, product2) -> product2.getId() - product1.getId());
             return products;
 
         } finally {
@@ -64,7 +64,7 @@ public class ProductManager {
             Product product = session.get(Product.class, id);
 
             Product returnProduct = product;
-            
+
             returnProduct.setTypes(product.getTypes());
 
             return returnProduct;
@@ -131,9 +131,9 @@ public class ProductManager {
 
             session.save(product);
             session.getTransaction().commit();
-            
+
             return product.getId();
-            
+
         } finally {
             session.close();
         }
@@ -190,7 +190,7 @@ public class ProductManager {
             Product product = session.load(Product.class, productId);
             if (product.getStatus() == 0) {
                 product.setStatus(1);
-            }else{
+            } else {
                 product.setStatus(0);
             }
             session.saveOrUpdate(product);

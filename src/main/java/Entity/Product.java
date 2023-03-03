@@ -5,6 +5,7 @@
 package Entity;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
@@ -82,10 +83,15 @@ public class Product implements Serializable {
         this.des = des;
     }
 
-    public float getPrice() {
+    public String getPrice() {
+        
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedPrice = formatter.format(this.price);
+        return formattedPrice;
+    }
+    public float getPriceValue(){
         return price;
     }
-
     public void setPrice(float price) {
         this.price = price;
     }

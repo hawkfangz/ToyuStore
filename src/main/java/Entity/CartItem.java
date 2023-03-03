@@ -5,6 +5,7 @@
 package Entity;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -81,7 +82,7 @@ public class CartItem implements Serializable {
     }
 
     public void setPrice() {
-        this.price = quantity * product.getPrice();
+        this.price = quantity * product.getPriceValue();
     }
 
     public Order getOrder() {

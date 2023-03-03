@@ -8,13 +8,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <c:set var="title" value="Admin || Login" />
+        <c:set var="title" value="Login" scope="request"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="header.jsp" /> 
 
         <title>Detail</title>
     </head>
     <body>
+        <c:if test="${sessionScope.user != null}">
+            <c:redirect url="user" />
+        </c:if>
+        
         <div class="hero_area">
             <!-- header section strats -->
             <header class="header_section">
@@ -80,6 +84,7 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
+                                <p>Don't have account <a href="sign-up">Sign up now!</a> </p>
                         </div>
                     </div>
                 </div>

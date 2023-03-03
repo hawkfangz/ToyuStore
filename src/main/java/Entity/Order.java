@@ -6,6 +6,8 @@ package Entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,20 +29,19 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private int orderId;
-    
+
     @Column(name = "customer_id")
     private int customerId;
-    
+
     private float price;
-    
-    private Date date;
-    
+
+    private LocalDate date;
+
     private String status;
-    
+
     @OneToMany(mappedBy = "order")
     private Set<CartItem> items;
-    
-    
+
     public Order() {
         this.status = "placed";
     }
@@ -61,6 +62,28 @@ public class Order implements Serializable {
         this.customerId = customerId;
     }
 
+    public String getDate() {
+        String date;
+        if (this.date == null) {
+            date = "Not Available";
+        } else {
+            date = this.date.toString();
+        }
+        return date.toString();
+    }
+
+    public void setDate() {
+        this.date = LocalDate.now();
+    }
+
+    public Set<CartItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<CartItem> items) {
+        this.items = items;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -69,12 +92,15 @@ public class Order implements Serializable {
         this.status = status;
     }
 
-    public float getPrice() {
-        return price;
+    public String getPrice() {
+
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedPrice = formatter.format(this.price);
+        return formattedPrice;
     }
 
     public void setPrice(float price) {
         this.price = price;
     }
-    
+
 }

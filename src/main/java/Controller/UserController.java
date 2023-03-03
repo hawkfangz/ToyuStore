@@ -43,12 +43,12 @@ public class UserController extends HttpServlet {
         String password = request.getParameter("password");
         String action = request.getParameter("action");
         String destinate = "login.jsp";
-        User user;
+        User user = (User) session.getAttribute("user");
 
         UserManager userManager = new UserManager();
-        if (action != null) {
+        if (action != null && user == null) {
             System.out.println(action);
-            if (action.equals("login")) {
+            if (action.equals("login") && user == null) {
                 user = userManager.getCustomer(account, password);
                 if (user != null) {
                     session.setAttribute("user", user);
@@ -63,27 +63,28 @@ public class UserController extends HttpServlet {
             if (action.equals("signup")) {
                 String name = request.getParameter("name");
                 String address = request.getParameter("address");
+                String email = request.getParameter("email");
                 String dob = request.getParameter("dob");
                 String phone = request.getParameter("phone");
                 String gender = request.getParameter("gender");
                 LocalDate dateOfBirth = LocalDate.parse(dob);
-
-//                user.setAccount(account);
-//                user.setPassword(password);
-//                user.setName(name);
-//                user.setPhone(phone);
-//                user.setEmail(phone);
-//                user.setDob(dateOfBirth);
-//                user.setAddress(address);
-//                user.setGender(gender);
-
-                if (userManager.signUp(account, password, name, phone, dateOfBirth, address, gender)) {
+                if (userManager.signUp(account, password, name, phone, dateOfBirth, address, email, gender)) {
                     destinate = "login";
                     request.setAttribute("message", "Sign up Success, please login!");
                 }
             }
+
         }
 
+        if (user != null) {
+            destinate = "user.jsp";
+            if (action != null) {
+                if (action.equals("logout")) {
+                    session.invalidate();
+                    destinate = "login.jsp";
+                }
+            }
+        }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinate);
         requestDispatcher.forward(request, response);
     }

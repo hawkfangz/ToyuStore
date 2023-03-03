@@ -4,6 +4,7 @@
  */
 package Entity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +37,15 @@ public class Cart {
 
         return total;
     }
-    
-    
-//  addQuantity add 1 to item quantity
 
+    public String getPriceString() {
+        float total = getCartPrice();
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedPrice = formatter.format(total);
+        return formattedPrice;
+    }
+
+//  addQuantity add 1 to item quantity
     public void addItem(CartItem item) {
         int itemPosition = itemExisted(item);
         if (itemPosition == -1) {
@@ -50,6 +56,13 @@ public class Cart {
         }
     }
 
+    public void removeItem(int id) {
+        for (CartItem cartItem : cart) {
+            if (cartItem.getProduct().getId() == id) {
+                cart.remove(cartItem);
+            }
+        }
+    }
     public int itemExisted(CartItem checkingItem) {
 
         for (int index = 0; index < cart.size(); index++) {

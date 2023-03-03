@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <c:set var="title" value="Cart" scope="request"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="header.jsp" /> 
 
@@ -58,22 +59,21 @@
             </header>
         </div>
         <!-- end header section code start here-->
-        <div class="container">
+        <div class="container cart-box">
             <div class="heading_container heading_center">
-                    <h2>
-                        Cart
-                    </h2>
-                </div>
+                <h2>
+                    Cart
+                </h2>
+            </div>
             <c:if test="${empty sessionScope.cart}">
                 <c:redirect url="login" />
             </c:if>     
-            <!--    <c:if test="${empty sessionScope.cart}">
-                    <p>Your cart is empty</p>
-            </c:if>-->
+            <c:if test="${sessionScope.cart.cart.size() == 0}">
+                <p>Yo your cart is empty!!</p>
+            </c:if>
             <c:if test="${not empty cart.cart}">
                 <p>Your cart contains:</p>
                 <c:forEach items="${sessionScope.cart.cart}" var="item">
-                <!--<li>${item.getName()}</li>-->
                     <div class="row">
                         <div class="col-md-4 product-detail media">
                             <div class="img-container">
@@ -84,14 +84,22 @@
                             <h5 class="mb-1">${item.name}</h5>
                             <p class="mb-2">${item.quantity}</p>
                             <p class="mb-2">$ ${item.price}</p>
-                            <form action="removeFromCart" method="post">
-                                <input type="hidden" name="productId" value="1">
+                            <form action="cart" method="post">
+                                <input type="hidden" name="id" value="${item.getProductId()}">
+                                <input type="hidden" name="action" value="remove">
                                 <button type="submit" class="btn btn-danger btn-sm">Remove from Cart</button>
                             </form>
                         </div>
                     </div>
                 </c:forEach>
-                    <c:out value="${sessionScope.cart.getCartPrice()}"></c:out>
+            </c:if>
+            <c:if test="${not empty cart.cart}">
+                <div class="place-button">
+                    <div class="alert alert-primary">
+                        <b class="price"> Total: <c:out value="${sessionScope.cart.getPriceString()}$"></c:out></b>
+                        </div>
+                        <a href="cart?action=place" class="add_cart_btn btn-danger btn-lg">Place Order</a>
+                    </div>
             </c:if>
         </div>
         <!-- info section -->

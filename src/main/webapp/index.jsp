@@ -6,10 +6,10 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<c:set var="title" value="Home"/>
+
 <!DOCTYPE html>
 <html>
-    <c:set var="title" scope="session" value="Home"/>
     <jsp:include page="header.jsp" />  
     <body>
 
@@ -67,7 +67,7 @@
                                                 Welcome to our shop
                                             </h1>
                                             <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quam velit saepe dolorem deserunt quo quidem ad optio.
+                                                We provide you collectibles from your favourite series.
                                             </p>
                                             <a href="">
                                                 Read More
@@ -165,7 +165,7 @@
                             <div class="box">
                                 <div class="img-box">
                                     <img src="product/${o.id}.jpg" onerror="this.src='product/undefined.png';">
-                                    <a href="" class="add_cart_btn">
+                                    <a href="cart?action=add&id=${o.id}" class="add_cart_btn">
                                         <span>
                                             Add To Cart
                                         </span>

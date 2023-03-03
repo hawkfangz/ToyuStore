@@ -3,11 +3,12 @@
     Created on : Feb 21, 2023, 10:04:11 PM
     Author     : phanh
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <c:set var="title" value="Profile" scope="request"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="header.jsp" /> 
 
@@ -57,7 +58,33 @@
         </div>
         <!-- end header section code start here-->
         <div class="container">
-            
+            <c:set var="user" value="${sessionScope.user}" />
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">User Profile</h4>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="font-weight-bold">Name:</p>
+                                    <p class="font-weight-bold">Email:</p>
+                                    <p class="font-weight-bold">Phone:</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="font-weight-normal">${user.name}</p>
+                                    <p class="font-weight-normal">${user.email}</p>
+                                    <p class="font-weight-normal">${user.phone}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <p class="font-weight-bold">Bio:</p>
+                            <p class="font-weight-normal">${user.address}</p>
+                            <a href="#" class="btn btn-primary">Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- info section -->
         <section class="info_section ">
