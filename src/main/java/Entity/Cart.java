@@ -57,12 +57,13 @@ public class Cart {
     }
 
     public void removeItem(int id) {
-        for (CartItem cartItem : cart) {
-            if (cartItem.getProduct().getId() == id) {
-                cart.remove(cartItem);
+        for (int i = 0; i < cart.size(); i++) {
+            if (cart.get(i).getProduct().getId() == id) {
+                cart.remove(i);
             }
         }
     }
+
     public int itemExisted(CartItem checkingItem) {
 
         for (int index = 0; index < cart.size(); index++) {

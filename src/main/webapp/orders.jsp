@@ -58,7 +58,7 @@
             </header>
         </div>
         <!-- end header section code start here-->
-        <div class="container">
+        <div class="container cart-box">
             <br>
             <table class="table type-table">
                 <thead>

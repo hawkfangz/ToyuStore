@@ -38,7 +38,7 @@
                         </span>
                     </a>
                     <a href="sign-up" class="account-link">
-                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <i class="fa fa-signing" aria-hidden="true"></i>
                         <span>
                             Sign Up
                         </span>
@@ -55,6 +55,12 @@
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         <span>
                             Cart
+                        </span>
+                    </a>
+                    <a href="order" class="cart-link">
+                        <i class="fa fa-history" aria-hidden="true"></i>
+                        <span>
+                            Order
                         </span>
                     </a>
                     <a href="user?action=logout" class="account-link">

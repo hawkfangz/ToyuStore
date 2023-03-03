@@ -63,6 +63,7 @@ public class CartController extends HttpServlet {
         userCart = (Cart) session.getAttribute("cart");
         user = (User) session.getAttribute("user");
         System.out.println(action);
+        
         if (userCart == null) {
             session.setAttribute("cart", new Cart());
         }
@@ -82,12 +83,15 @@ public class CartController extends HttpServlet {
             if (action.equalsIgnoreCase("remove")) {
                 productId = Integer.parseInt(request.getParameter("id"));
                 userCart.removeItem(productId);
+                session.setAttribute("cart", userCart);
             }
             if (action.equalsIgnoreCase("place")) {
                 orderManager = new OrderManager();
                 order = orderManager.CreateOrder(user, userCart);
                 orderManager.addItemsToOrder(order, userCart);
                 destinate = "order";
+                userCart = new Cart();
+                session.setAttribute("cart", userCart);
             }
 
         } else {
