@@ -39,7 +39,7 @@
                                         <a class="nav-link" href="about.jsp"> About</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="Product">Products</a>
+                                        <a class="nav-link" href="product">Products</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="why.jsp">Why Us</a>
@@ -160,10 +160,10 @@
                     <c:if test="${empty productList}">
                         <c:redirect url="home" />
                     </c:if>
-                    <c:forEach items="${productList}" var="o" varStatus="loop">
+                    <c:forEach items="${productList}" var="o" begin="0" end="14">
                         <div class="col-sm-6 col-lg-4">
                             <div class="box">
-                                <div class="img-box">
+                                <div class="img-container img-box">
                                     <img src="product/${o.id}.jpg" onerror="this.src='product/undefined.png';">
                                     <a href="cart?action=add&id=${o.id}" class="add_cart_btn">
                                         <span>
@@ -173,7 +173,7 @@
                                 </div>
                                 <div class="detail-box">
                                     <h5>
-                                        ${o.name}
+                                        <a href="url">${o.name}</a>
                                     </h5>
                                     <div class="product_info">
                                         <h5>
@@ -193,7 +193,7 @@
                     </c:forEach>
                 </div>
                 <div class="btn_box">
-                    <a href="" class="view_more-link">
+                    <a href="product" class="view_more-link">
                         View More
                     </a>
                 </div>

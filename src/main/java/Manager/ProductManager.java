@@ -35,7 +35,7 @@ public class ProductManager {
 //                }
 //            }
             products.sort((product1, product2) -> product2.getId() - product1.getId());
-
+            
             return products;
 
         } finally {

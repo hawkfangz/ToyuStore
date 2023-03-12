@@ -13,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 /**
@@ -21,14 +22,14 @@ import org.hibernate.query.Query;
  */
 public class UserManager {
 
-    public User getCustomer(String account, String password) {
+    public User login(String account, String password) {
         User user = null;
         password = hashMD5(password);
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
 //            Get object list from table, Query should be from class name 
             Query<User> query = session.createQuery("FROM User WHERE account "
-                    + "= :account AND password = :password");
+                    + "= :account AND password = :password AND status = 1");
 
             query.setParameter("account", account);
             query.setParameter("password", password);
@@ -40,7 +41,8 @@ public class UserManager {
         }
     }
 
-    public boolean signUp(String account, String password, String name, String phone, LocalDate dateOfBirth, String address,String email, String gender) {
+    public boolean signUp(String account, String password,
+            String name, String phone, LocalDate dateOfBirth, String address, String email, String gender) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             User user = new User();
@@ -58,9 +60,37 @@ public class UserManager {
         } finally {
             session.close();
         }
-//        return false;
     }
-        public String hashMD5(String input) {
+
+    public User update(int id, String name, String phone, LocalDate dateOfBirth,
+                String address, String email, String gender) {
+        User user = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            user = session.load(User.class, id);
+            user.setName(name);
+            user.setPhone(phone);
+            user.setEmail(email);
+            user.setDob(dateOfBirth);
+            user.setAddress(address);
+            user.setGender(gender);
+
+            session.update(user);
+            transaction.commit();
+            return user;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
+    public String hashMD5(String input) {
 
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

@@ -37,6 +37,9 @@ public class UserController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         HttpSession session = request.getSession();
 
         String account = request.getParameter("account");
@@ -44,12 +47,10 @@ public class UserController extends HttpServlet {
         String action = request.getParameter("action");
         String destinate = "login.jsp";
         User user = (User) session.getAttribute("user");
-
         UserManager userManager = new UserManager();
         if (action != null && user == null) {
-            System.out.println(action);
             if (action.equals("login") && user == null) {
-                user = userManager.getCustomer(account, password);
+                user = userManager.login(account, password);
                 if (user != null) {
                     session.setAttribute("user", user);
                     Cart userCart = userCart = new Cart();
@@ -75,13 +76,25 @@ public class UserController extends HttpServlet {
             }
 
         }
-
         if (user != null) {
             destinate = "user.jsp";
             if (action != null) {
                 if (action.equals("logout")) {
                     session.invalidate();
                     destinate = "login.jsp";
+                }
+                if (action.equals("do-edit")) {
+                    String name = request.getParameter("name");
+                    String address = request.getParameter("address");
+                    String email = request.getParameter("email");
+
+                    String dob = request.getParameter("dob");
+                    LocalDate dateOfBirth = LocalDate.parse(dob);
+                    String phone = request.getParameter("phone");
+                    String gender = request.getParameter("gender");
+                    user = userManager.update(user.getCustomerId(), name, phone, dateOfBirth, address, email, gender);
+                    session.setAttribute("user", user);
+                    destinate = "user.jsp";
                 }
             }
         }

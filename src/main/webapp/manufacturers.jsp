@@ -41,7 +41,7 @@
                                         <a class="nav-link" href="about.jsp"> About</a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="Product">Products</a>
+                                        <a class="nav-link" href="product">Products</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="why.jsp">Why Us</a>

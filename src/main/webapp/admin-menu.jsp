@@ -35,7 +35,7 @@
                                         <a class="nav-link" href="about.jsp"> About</a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="Product">Products</a>
+                                        <a class="nav-link" href="product">Products</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="why.jsp">Why Us</a>
@@ -75,7 +75,7 @@
                             </div>
                             <div class="detail-box">
                                 <h5>
-                                    <a class="user-btn" href="Product">Products</a><br>
+                                    <a class="user-btn" href="product">Products</a><br>
                                 </h5>
                                 <p>
                                     Products detail Manager

@@ -57,6 +57,9 @@ public class AdminController extends HttpServlet {
                     destinate = "admin-menu";
                 }
             }
+            if (action.equals("logout")) {
+                session.invalidate();
+            }
         }
         request.setAttribute("title", "Admin");
 //        response.sendRedirect(destinate);

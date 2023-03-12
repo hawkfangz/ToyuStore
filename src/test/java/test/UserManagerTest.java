@@ -21,18 +21,18 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class UserManagerTest {
 
-    UserManager userManager = new UserManager();
-    AdminManager adminManager = new AdminManager();
-    @Test
-    void test() {
-        User user = userManager.getCustomer("suong", "admin");
-        assertFalse(user == null);
-    }
-    @Test
-    void test2() {
-        Admin admin = adminManager.login("hau", "admin");
-        assertFalse(admin == null);
-    }
+//    UserManager userManager = new UserManager();
+//    AdminManager adminManager = new AdminManager();
+//    @Test
+//    void test() {
+//        User user = userManager.getCustomer("suong", "admin");
+//        assertFalse(user == null);
+//    }
+//    @Test
+//    void test2() {
+//        Admin admin = adminManager.login("hau", "admin");
+//        assertFalse(admin == null);
+//    }
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

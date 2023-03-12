@@ -1,8 +1,9 @@
 <%-- 
-    Document   : cart
-    Created on : Feb 26, 2023, 5:14:54 PM
+    Document   : user-form
+    Created on : Mar 4, 2023, 11:22:26 PM
     Author     : phanh
 --%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,11 +11,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <c:set var="title" value="Cart" scope="request"/>
+        <c:if test="${sessionScope.user  !=null }">
+            <c:set var="user" value="${sessionScope.user}" />
+        </c:if>
+        <c:set var="title" value="Edit" scope="request"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="header.jsp" /> 
-
-        <title>Detail</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     </head>
     <body>
         <div class="hero_area">
@@ -59,48 +62,86 @@
             </header>
         </div>
         <!-- end header section code start here-->
-        <div class="container cart-box">
-            <div class="heading_container heading_center">
-                <h2>
-                    Cart
-                </h2>
-            </div>
-            <c:if test="${empty sessionScope.cart}">
+        <div class="container">
+            <c:if test="${sessionScope.user  ==null }">
                 <c:redirect url="login" />
-            </c:if>     
-            <c:if test="${sessionScope.cart.cart.size() == 0}">
-                <p>Yo your cart is empty!!</p>
             </c:if>
-            <c:if test="${not empty cart.cart}">
-                <p>Your cart contains:</p>
-                <c:forEach items="${sessionScope.cart.cart}" var="item">
-                    <div class="row">
-                        <div class="col-md-4 product-detail media">
-                            <div class="img-container">
-                                <img class="img-fluid rounded mb-3 mb-md-0" src="product/${item.getProductId()}.jpg" alt="">
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <h5 class="mb-1">${item.name}</h5>
-                            <p class="mb-2">${item.quantity}</p>
-                            <p class="mb-2">$ ${item.price}</p>
-                            <form action="cart" method="post">
-                                <input type="hidden" name="id" value="${item.getProductId()}">
-                                <input type="hidden" name="action" value="remove">
-                                <button type="submit" class="btn btn-danger btn-sm">Remove from Cart</button>
-                            </form>
+
+            <form method="POST" action="user" class="needs-validation" novalidate>
+                <input type="hidden" name="action" value="do-edit">
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom01">Name</label>
+                        <input name="name" type="text" class="form-control" id="validationCustom01" placeholder="Your name..." value="${user.name}" required>
+                        <div class="valid-feedback">
+                            Looks good!
                         </div>
                     </div>
-                </c:forEach>
-            </c:if>
-            <c:if test="${not empty cart.cart}">
-                <div class="place-button">
-                    <div class="alert alert-primary">
-                        <b class="price"> Total: <c:out value="${sessionScope.cart.getPriceString()}$"></c:out></b>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom01">Phone</label>
+                        <input name="phone" type="text" class="form-control" id="validationCustom01" placeholder="Phone number..." value="${user.phone}" required>
+                        <div class="valid-feedback">
+                            Looks good!
                         </div>
-                        <a href="cart?action=place" class="add_cart_btn btn-danger btn-lg">Place Order</a>
                     </div>
-            </c:if>
+                </div>
+               <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="validationCustom01">Email</label>
+                        <input name="email" type="email" class="form-control" id="validationCustom01" placeholder="Email..." value="${user.email}" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                </div>         
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="validationCustom03">Address</label>
+                        <input name="address" type="text" class="form-control" id="validationCustom03" placeholder="Address..." value="${user.address}" required>
+                        <div class="invalid-feedback">
+                            Please provide an address.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="datepicker">Date of birth: </label>
+                    <input value="${user.dob}" type="text" id="datepicker" name="dob" class="datepicker" data-date-format="yyyy-mm-dd">
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <select name="gender">
+                            <option value="other">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit">Submit form</button>
+            </form>
+
+            <script>
+                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                (function () {
+                    'use strict';
+                    window.addEventListener('load', function () {
+                        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                        var forms = document.getElementsByClassName('needs-validation');
+                        // Loop over them and prevent submission
+                        var validation = Array.prototype.filter.call(forms, function (form) {
+                            form.addEventListener('submit', function (event) {
+                                if (form.checkValidity() === false) {
+                                    event.preventDefault();
+                                    event.stopPropagation();
+                                }
+                                form.classList.add('was-validated');
+                            }, false);
+                        });
+                    }, false);
+                })();
+            </script>
         </div>
         <!-- info section -->
         <section class="info_section ">
@@ -224,6 +265,15 @@
         <script src="js/bootstrap.js"></script>
         <!-- custom js -->
         <script src="js/custom.js"></script>
+        <script>
+                $('select[name="gender"] option[value="${user.gender}"]').prop('selected', true);
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <script>
+                $(document).ready(function () {
+                    $('.datepicker').datepicker();
+                });
+        </script>
 
     </body>
 </html>

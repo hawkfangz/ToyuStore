@@ -38,10 +38,11 @@ public class HomeController extends HttpServlet {
         ProductManager productManager = new ProductManager();
 
         List<Product> productList = null;
-
         productList = productManager.getActiveProducts();
-        request.setAttribute("productList", productList);
+
+        System.out.println(productList.size());
         request.setAttribute("title", "Home");
+        request.setAttribute("productList", productList);
 
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 

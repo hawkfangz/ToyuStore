@@ -38,7 +38,7 @@
                                         <a class="nav-link" href="about.jsp"> About</a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="Product">Products</a>
+                                        <a class="nav-link" href="product">Products</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="why.jsp">Why Us</a>
@@ -65,9 +65,9 @@
                         Our Products
                     </h2>
                 </div>
-                <a class="btn btn-primary" href="AdminProduct?action=create">Create</a>
                 <c:if test="${sessionScope.admin != null}">
-                    <c:forEach items="${allProductList}" var="o">
+                    <a class="btn btn-primary" href="AdminProduct?action=create">Create</a>
+                    <c:forEach items="${allProductList}" var="o" begin="${start}" end="${end}">
                         <div class="row">
                             <div class="product-detail media">
                                 <div class="img-container">
@@ -91,9 +91,9 @@
                         </div>
                     </c:forEach>
                 </c:if>
-                <%--<c:if test="${sessionScope.admin == null}">--%>
-                    <div class="row">  
-                        <c:forEach items="${productList}" var="o">
+                <c:if test="${sessionScope.admin == null}">
+                    <div class="row">
+                        <c:forEach items="${productList}" var="o" begin="${start}" end="${end}">
                             <div class="col-sm-6 col-lg-4">
                                 <div class="box">
                                     <div class="img-box">
@@ -105,7 +105,7 @@
                                         </a>
                                     </div>
                                     <div class="detail-box">
-                                        <a href="Product?id=${o.id}"><h5>${o.name}</h5></a>
+                                        <a href="product?id=${o.id}"><h5>${o.name}</h5></a>
                                         <div class="product_info">
                                             <h5>
                                                 <span>$</span> ${o.price}
@@ -116,11 +116,15 @@
                             </div>
                         </c:forEach>
                     </div>
-                <%--</c:if>--%>
+                    <c:set var="productList" value="${requestScope.productList}" />
+                </c:if>
+
                 <div class="btn_box">
-                    <a href="" class="view_more-link">
-                        View More
-                    </a>
+                    <c:forEach var="i" begin="1" end="${pages}">
+                        <a href="product?page=${i}" class="view_more-link">
+                            ${i}
+                        </a>
+                    </c:forEach>
                 </div>
             </div>
         </section>
@@ -231,7 +235,7 @@
         </section>
 
         <!-- end info_section -->
-        
+
 
         <!-- footer section -->
         <footer class="footer_section">

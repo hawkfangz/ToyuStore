@@ -52,8 +52,10 @@ public class AdminProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
-        String path = "Product";
+        String path = "product";
 
         String action = request.getParameter("action");
 
@@ -77,7 +79,7 @@ public class AdminProductController extends HttpServlet {
             if (action.equals("toggle")) {
                 int productId = Integer.parseInt(request.getParameter("id"));
                 productManager.toggleProduct(productId);
-                response.sendRedirect("Product");
+                response.sendRedirect("product");
                 return;
             }
 
@@ -135,8 +137,9 @@ public class AdminProductController extends HttpServlet {
 
                 outStream.close();
                 fileContent.close();
+                
 
-                path = "Product";
+                path = "product";
             }
 //            http://localhost:8080/ToyuStore/AdminProduct?action=edit&id=6
 //           Set type cua product sang List 
@@ -204,7 +207,7 @@ public class AdminProductController extends HttpServlet {
 
                 productManager.editProduct(id, name, description, Price, types, manufacturers);
 
-                path = "Product";
+                path = "product";
             }
         } else if (!isAdmin) {
             path = "admin";

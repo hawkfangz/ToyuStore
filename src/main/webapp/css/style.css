@@ -5,7 +5,7 @@ form{
 .product-detail.media .img-container img{
     width: 250px;
     height: 250px;
-    object-fit: contain;
+    object-fit: cover;
 }
 .login-form{
     margin-bottom: 100px;
@@ -38,6 +38,9 @@ form{
 }
 .price{
     font-size: 24px;
+}
+.order-items{
+    width: 700px;
 }
 /*User CSS end here*/
 body {
@@ -476,6 +479,7 @@ a:focus {
 .product_section .box .img-box img {
     height: 175px;
     max-width: 100%;
+    object-fit: cover;
 }
 
 .product_section .box .img-box .add_cart_btn {
@@ -565,7 +569,8 @@ a:focus {
 
 .product_section .btn_box .view_more-link {
     display: inline-block;
-    padding: 10px 45px;
+    padding: 10px 20px;
+    margin-left: 10px;
     background-color: #f3c93e;
     color: #ffffff;
     border-radius: 5px;

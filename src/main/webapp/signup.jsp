@@ -12,8 +12,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="header.jsp" /> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-
-
         <title>Detail</title>
     </head>
     <body>
@@ -43,7 +41,7 @@
                                         <a class="nav-link" href="about.jsp"> About</a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="Product">Products</a>
+                                        <a class="nav-link" href="product">Products</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="why.jsp">Why Us</a>
@@ -61,7 +59,7 @@
         <!-- end header section -->
         <div class="container mt-lg-5 login-form">
             <div class="row">
-                <div class="col-md-4 mx-auto">
+                <div class="col-md-6 mx-auto">
                     <div class="card">
                         <div class="card-header">
                             Sign Up
@@ -69,10 +67,7 @@
                         <div class="card-body">
                             <form method="POST" action="user">
                                 <input type="hidden" id="action"name="action" value="signup">
-                                <div class="form-group">
-                                    <label for="account">Customer Name:</label>
-                                    <input name ="name" type="text" class="form-control" id="account" placeholder="Enter Account">
-                                </div>
+
                                 <div class="form-group">
                                     <label for="account">Account</label>
                                     <input name ="account" type="text" class="form-control" id="account" placeholder="Enter Account">
@@ -85,6 +80,10 @@
                                     <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" required onkeyup='checkPasswordMatch();'>
 
                                     <div id="passwordError" style="color:red;"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="account">Customer Name:</label>
+                                    <input name ="name" type="text" class="form-control" id="account" placeholder="Enter Account">
                                 </div>
 
 
@@ -104,15 +103,15 @@
 
                                 <div class="form-group">
                                     <label for="address">Address</label>
-                                    <input name ="address" type="text" class="form-control" id="address" placeholder="Enter Account">
+                                    <input name ="address" type="text" class="form-control" id="address" placeholder="Enter Address for delivery">
                                 </div>
                                 <label for="datepicker">Date of birth: </label>
-                                <input type="text" id="datepicker" name="dob" class="datepicker" data-date-format="yyyy-mm-dd">
-                                    <div class="form-group">
-                                        <label for="phone-input">Phone Number</label>
-                                        <input type="text" class="form-control" id="phone-input" name="phone" pattern="(03|05|07|08|09)+([0-9]{8})\b" required>
-                                        <div class="invalid-feedback">Please enter a valid Vietnamese phone number.</div>
-                                    </div>
+                                <input type="text" class="datepicker" data-date-format="yyyy-mm-dd">
+                                <div class="form-group">
+                                    <label for="phone-input">Phone Number</label>
+                                    <input type="text" class="form-control" id="phone-input" name="phone" pattern="(03|05|07|08|09)+([0-9]{8})\b" required>
+                                    <div class="invalid-feedback">Please enter a valid Vietnamese phone number.</div>
+                                </div>
 
                                 <div class="form-group">
                                     <label><c:out value="${message}"></c:out></label>

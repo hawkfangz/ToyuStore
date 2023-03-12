@@ -41,7 +41,7 @@
                                         <a class="nav-link" href="about.jsp"> About</a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="Product">Products</a>
+                                        <a class="nav-link" href="product">Products</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="why.jsp">Why Us</a>
@@ -78,9 +78,9 @@
                                 </div>
                             </div>
                             <hr>
-                            <p class="font-weight-bold">Bio:</p>
+                            <p class="font-weight-bold">Address:</p>
                             <p class="font-weight-normal">${user.address}</p>
-                            <a href="#" class="btn btn-primary">Edit Profile</a>
+                            <a href="user-form" class="btn btn-primary">Edit Profile</a>
                         </div>
                     </div>
                 </div>

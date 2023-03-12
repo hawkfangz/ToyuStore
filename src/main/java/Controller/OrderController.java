@@ -44,8 +44,7 @@ public class OrderController extends HttpServlet {
         String destinate = "orders.jsp";
         OrderManager orderManager = new OrderManager();
 
-        if (action == null) {
-            action = "";
+        if (action != null) {
         }
         
         if (user != null) {

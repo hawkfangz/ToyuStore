@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author phanh
  */
-@WebServlet(name = "Product", urlPatterns = {"/Product"})
+@WebServlet(name = "product", urlPatterns = {"/product"})
 public class ProductController extends HttpServlet {
 
     /**
@@ -38,15 +38,27 @@ public class ProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         String path = "products";
-        if (request.getParameter("path")!=null) {
+        int page;
+        int start;
+        int end;
+        if (request.getParameter("path") != null) {
             path = "index.jsp";
         }
         String id = request.getParameter("id");
-
-        List<Product> productList = null;
-        List<Product> allProductList = null;
+        String pageNumber = request.getParameter("page");
+        if (pageNumber != null) {
+            page = Integer.parseInt(pageNumber);
+        } else {
+            page = 1;
+        }
+        start = (page - 1) * 9;
+        end = start + 9 - 1;
+        List<Product> productList = (List<Product>) request.getAttribute("productList");
+        List<Product> allProductList = (List<Product>) request.getAttribute("allProductList");
 
         ProductManager productManager = new ProductManager();
 
@@ -58,13 +70,20 @@ public class ProductController extends HttpServlet {
             request.setAttribute("productTypes", productTypes);
             request.setAttribute("productManufacturers", productManufacturers);
             request.setAttribute("product", requestProduct);
-        } else {
+        } else if (productList == null || allProductList == null) {
             productList = productManager.getActiveProducts();
             allProductList = productManager.getAllProducts();
             request.setAttribute("productList", productList);
             request.setAttribute("allProductList", allProductList);
         }
-
+        if (productList != null) {
+            float pages = productList.size() / 9;
+            pages = (float) Math.ceil(pages);
+            int pageAmount = (int) pages;
+            request.setAttribute("pages", pageAmount);
+        }
+        request.setAttribute("start", start);
+        request.setAttribute("end", end);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(path);
         requestDispatcher.forward(request, response);
 

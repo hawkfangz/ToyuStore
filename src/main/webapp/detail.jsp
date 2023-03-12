@@ -41,7 +41,7 @@
                                         <a class="nav-link" href="about.jsp"> About</a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="Product">Products</a>
+                                        <a class="nav-link" href="product">Products</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="why.jsp">Why Us</a>
@@ -70,15 +70,18 @@
                     </div>
                     <div class="col-md-6">
                         <h2 class="mb-3">${product.name}</h2>
-                        <p>Manufacturer: <span class="font-weight-bold">Manufacturer Name</span></p>
+                        <p>Manufacturer:
+                            <c:forEach items="${productManufacturers}" var="o">
+                                <span class="font-weight-bold">${o.name}</span></p>
+                            </c:forEach>
                         <p>Type: 
                             <c:forEach items="${productTypes}" var="o">
                                 <a href="Type?id=${o.id}"><strong>${o.name}</strong></a>&nbsp
-                            </c:forEach>
+                                    </c:forEach>
                         </p>
                         <p class="mb-3">Description: ${product.des} </p>
                         <p class="h4 mb-3">Price: <span class="font-weight-bold">${product.price}</span></p>
-                        <button class="btn btn-primary btn-block">Add to Cart</button>
+                        <a class="btn btn-primary btn-block" href="cart?action=add&id=${product.id}" >Add to Cart</a>
                     </div>
                 </div>
             </div>

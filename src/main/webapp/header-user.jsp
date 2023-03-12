@@ -70,6 +70,15 @@
                         </span>
                     </a>
                 </c:if>
+                <c:if test="${sessionScope.admin != null}">
+                   
+                    <a href="admin?action=logout" class="account-link">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <span>
+                            admin log out
+                        </span>
+                    </a>
+                </c:if>
 
             </div>
         </div>
