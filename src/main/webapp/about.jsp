@@ -15,7 +15,7 @@
                         <nav class="navbar navbar-expand-lg custom_nav-container ">
                             <a class="navbar-brand" href="index.jsp">
                                 <span>
-                                    Minics
+                                    Mistify
                                 </span>
                             </a>
 
@@ -62,9 +62,19 @@
                                 </h2>
                             </div>
                             <p>
-                                Totam architecto rem beatae veniam, cum officiis adipisci soluta perspiciatis ipsa, expedita maiores quae accusantium. Animi veniam aperiam, necessitatibus mollitia ipsum id optio ipsa odio ab facilis sit labore officia!
-                                Repellat expedita, deserunt eum soluta rem culpa. Aut, necessitatibus cumque. Voluptas consequuntur vitae aperiam animi sint earum, ex unde cupiditate, molestias dolore quos quas possimus eveniet facilis magnam? Vero, dicta.
-                            </p>
+                                Welcome to our online store, where we offer a wide range of anime character figures, collectibles, and games for fans of all ages.
+
+                                Our store is dedicated to providing high-quality and authentic anime merchandise that is sure to impress even the most discerning fans. We have a large selection of figures from popular anime shows, including Naruto, Dragon Ball, Sailor Moon, One Piece, and many more. Whether you're looking for a rare collector's item or just want to add to your collection, we have something for everyone.
+
+                                In addition to our vast collection of anime figures, we also offer a variety of collectibles, such as keychains, plushies, and cosplay accessories. We understand that fans want to immerse themselves in their favorite anime worlds, and our merchandise allows them to do just that.
+
+                                Our online store also features a wide range of anime-related games, including trading card games, board games, and video games. We strive to offer the latest and most popular anime games, so fans can stay up to date with their favorite shows.
+
+                                We're proud to say that our merchandise appeals to fans of all ages, whether you're a young child just getting into anime or an adult collector. We believe that everyone should be able to enjoy anime merchandise, and our store reflects that philosophy.
+
+                                We also understand that Western audiences have their own unique tastes and interests when it comes to anime, and we offer a selection of figures and merchandise that reflect those interests. Whether you're a fan of Western adaptations of anime, such as Avatar: The Last Airbender, or are interested in Western-inspired anime, such as RWBY, we have something for you.
+
+                                Thank you for visiting our online store, and we hope you find the perfect anime merchandise to add to your collection</p>
                             <a href="">
                                 Read More
                             </a>
@@ -90,7 +100,7 @@
                             <h5>
                                 <a href="" class="navbar-brand">
                                     <span>
-                                        Minics
+                                        Mistify
                                     </span>
                                 </a>
                             </h5>

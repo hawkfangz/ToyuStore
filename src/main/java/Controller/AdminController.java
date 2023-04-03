@@ -5,9 +5,12 @@
 package Controller;
 
 import Entity.Admin;
+import Entity.User;
 import Manager.AdminManager;
+import Manager.UserManager;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,7 +45,9 @@ public class AdminController extends HttpServlet {
         String account = request.getParameter("account");
         String password = request.getParameter("password");
         String action = request.getParameter("action");
+        UserManager usersManager = null;
         //hau admin
+        List<User> users;
         if (session.getAttribute("admin") == null && account == null) {
             destinate = "login_admin.jsp";
         }
@@ -59,6 +64,17 @@ public class AdminController extends HttpServlet {
             }
             if (action.equals("logout")) {
                 session.invalidate();
+            }
+            if (action.equals("accounts")) {
+                usersManager = new UserManager();
+                users = usersManager.getAllUsers();
+                request.setAttribute("allAccounts", users);
+                destinate = "account-manager.jsp";
+            }
+            if (action.equals("toggle")) {
+                usersManager = new UserManager();
+                String userId = request.getParameter("id");
+                usersManager.toggle(Integer.parseInt(userId));
             }
         }
         request.setAttribute("title", "Admin");

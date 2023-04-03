@@ -11,7 +11,10 @@
         <c:set var="title" value="Sign Up" scope="request"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="header.jsp" /> 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
         <title>Detail</title>
     </head>
     <body>
@@ -24,7 +27,7 @@
                         <nav class="navbar navbar-expand-lg custom_nav-container ">
                             <a class="navbar-brand" href="index.jsp">
                                 <span>
-                                    Minics
+                                    Mistify
                                 </span>
                             </a>
 
@@ -105,11 +108,11 @@
                                     <label for="address">Address</label>
                                     <input name ="address" type="text" class="form-control" id="address" placeholder="Enter Address for delivery">
                                 </div>
-                                <label for="datepicker">Date of birth: </label>
-                                <input type="text" class="datepicker" data-date-format="yyyy-mm-dd">
+                                    <label for="address">Date of Birth</label>
+                                    <input type="text" id="datepicker">
                                 <div class="form-group">
                                     <label for="phone-input">Phone Number</label>
-                                    <input type="text" class="form-control" id="phone-input" name="phone" pattern="(03|05|07|08|09)+([0-9]{8})\b" required>
+                                    <input type="text" class="form-control" id="phone-input" maxlength="10" name="phone" pattern="(03|05|07|08|09)+([0-9]{8})\b" required>
                                     <div class="invalid-feedback">Please enter a valid Vietnamese phone number.</div>
                                 </div>
 
@@ -137,7 +140,7 @@
                             <h5>
                                 <a href="" class="navbar-brand">
                                     <span>
-                                        Minics
+                                        Mistify
                                     </span>
                                 </a>
                             </h5>
@@ -246,19 +249,24 @@
         <!-- footer section -->
 
         <!-- jQery -->
-        <script src="js/jquery-3.4.1.min.js"></script>
+        <!--<script src="js/jquery-3.4.1.min.js"></script>-->
         <!-- bootstrap js -->
         <script src="js/bootstrap.js"></script>
         <!-- custom js -->
         <script src="js/custom.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
         <script>
-                                        $(document).ready(function () {
-                                            $('.datepicker').datepicker();
+                                        $(function () {
+                                            $("#datepicker").datepicker({
+                                                showOn: "button",
+                                                buttonImage: "images/calendar.gif",
+                                                buttonImageOnly: true,
+                                                buttonText: "Select date"
+                                                
+                                            });
                                         });
         </script>
-        <script>
 
+        <script>
             function checkPasswordMatch() {
                 var password = $("#password").val();
                 var confirmPassword = $("#confirmPassword").val();
@@ -268,7 +276,6 @@
                     $("#passwordError").html("");
                 }
             }
-
         </script>
 
     </body>

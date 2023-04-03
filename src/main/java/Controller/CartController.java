@@ -72,12 +72,23 @@ public class CartController extends HttpServlet {
             System.out.println(action);
             productManager = new ProductManager();
             if (action.equals("add")) {
-
                 productId = Integer.parseInt(request.getParameter("id"));
                 product = productManager.getProduct(productId);
                 CartItem item = new CartItem();
                 item.setProduct(product);
                 userCart.addItem(item);
+                session.setAttribute("cart", userCart);
+            }
+            if (action.equals("minus")) {
+                productId = Integer.parseInt(request.getParameter("id"));
+                product = productManager.getProduct(productId);
+                CartItem item = new CartItem();
+                item.setProduct(product);
+                int quantity  = userCart.minusItem(item);
+                System.out.println(quantity);
+                if (quantity ==0) {
+                    userCart.removeItem(item.getProductId());
+                }
                 session.setAttribute("cart", userCart);
             }
             if (action.equalsIgnoreCase("remove")) {

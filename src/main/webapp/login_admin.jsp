@@ -27,7 +27,7 @@
                         <nav class="navbar navbar-expand-lg custom_nav-container ">
                             <a class="navbar-brand" href="index.jsp">
                                 <span>
-                                    Minics
+                                    Mistify
                                 </span>
                             </a>
 
@@ -99,7 +99,7 @@
                             <h5>
                                 <a href="" class="navbar-brand">
                                     <span>
-                                        Minics
+                                        Mistify
                                     </span>
                                 </a>
                             </h5>

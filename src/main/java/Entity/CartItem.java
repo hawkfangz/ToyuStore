@@ -80,6 +80,11 @@ public class CartItem implements Serializable {
     public float getPrice() {
         return price;
     }
+    public String getPriceString(){
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        String formattedPrice = formatter.format(this.price);
+        return formattedPrice;
+    }
 
     public void setPrice() {
         this.price = quantity * product.getPriceValue();
@@ -95,6 +100,9 @@ public class CartItem implements Serializable {
 
     public void addQuantity() {
         this.quantity += 1;
+    }
+    public void minusQuantity() {
+        this.quantity -= 1;
     }
 
     @Override

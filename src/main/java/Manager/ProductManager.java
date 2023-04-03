@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -29,13 +32,8 @@ public class ProductManager {
 
             List<Product> products = query.list();
 
-//            for (Product product : products) {
-//                if (product.getStatus() == 0) {
-//                    products.remove(product);
-//                }
-//            }
             products.sort((product1, product2) -> product2.getId() - product1.getId());
-            
+
             return products;
 
         } finally {
@@ -47,9 +45,15 @@ public class ProductManager {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
 //            Get object list from table, Query should be from class name 
-            Query<Product> query = session.createQuery("FROM Product");
+//            Query<Product> query = session.createQuery("FROM Product");
+//            List<Product> products = query.list();
 
-            List<Product> products = query.list();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+            Root<Product> root = criteriaQuery.from(Product.class);
+            criteriaQuery.select(root);
+            List<Product> products = session.createQuery(criteriaQuery).getResultList();
+
             products.sort((product1, product2) -> product2.getId() - product1.getId());
             return products;
 
@@ -177,6 +181,26 @@ public class ProductManager {
             session.saveOrUpdate(product);
             session.getTransaction().commit();
 
+        } finally {
+            session.close();
+        }
+    }
+
+    public List<Product> search(String keyword) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Product> criteria = builder.createQuery(Product.class);
+            Root<Product> root = criteria.from(Product.class);
+
+            criteria.select(root).where(
+                    builder.or(
+                            builder.like(root.get("name"), "%" + keyword + "%"),
+                            builder.like(root.get("des"), "%" + keyword + "%")
+                    )
+            );
+
+            return session.createQuery(criteria).getResultList();
         } finally {
             session.close();
         }

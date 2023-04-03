@@ -1,18 +1,19 @@
-<%-- Document : orders Created on : Mar 3, 2023, 6:38:07 PM Author : phanh --%>
+<%-- 
+    Document   : product-2
+    Created on : Apr 4, 2023, 12:05:01 AM
+    Author     : phanh
+--%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <jsp:include page="header.jsp" />
-
-        <title>Detail</title>
+        <jsp:include page="header.jsp" /> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
-
     <body>
         <div class="hero_area">
             <!-- header section strats -->
@@ -27,23 +28,20 @@
                                 </span>
                             </a>
 
-                            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class=""> </span>
                             </button>
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav ">
                                     <li class="nav-item ">
-                                        <a class="nav-link" href="index.jsp">Home <span
-                                                class="sr-only">(current)</span></a>
+                                        <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="about.jsp"> About</a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="product">Products</a>
+                                        <a class="nav-link" href="Product">Products</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="why.jsp">Why Us</a>
@@ -59,45 +57,55 @@
             </header>
         </div>
         <!-- end header section code start here-->
-        <div class="container cart-box">
-            <table class="table">
-                <thead class="bg-primary text-light">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Number of Items</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <c:forEach var="order" items="${orders}">
-                    <thead class="bg-success text-light">
-                        <tr id="order">
-                            <th scope="col"> <a href="order?action=get&&orderId=${order.orderId}">${order.orderId}</a></th>
-                            <th scope="col">${order.date}</th>
-                            <th scope="col">${order.price}$</th>
-                            <th scope="col">${order.itemCount()}</th>
-                            <th scope="col">${order.getStatusString()}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:set var="index" value="0"/>
-                        <c:forEach var="item" items="${order.items}">
-                            <tr>
-                                <c:set var="index" value="${index + 1}"/>
-                                <th scope="row">${index}</th>
-                                <td>${item.product.name}</td>
-                                <td>${item.product.price}$</td>
-                                <td>${item.quantity}</td>
-                                <td>${item.price}$</td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </c:forEach>
-            </table>
+        <div class="product-container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-chevron-down mr-2"></i>Product Types
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <c:forEach items="${typeList}" var="type">
+                                <li class="list-group-item"><a href="Search?type=type&&filter=${type.id}">${type.name}(${type.quantity})</a>  </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                    
+                </div>
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-header">Products</div>
+                        <div class="card-body product_section">
+                            <div class="row">
+                                <c:forEach items="${productList}" var="o" begin="${start}" end="${end}">
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="box">
+                                            <div class="img-box">
+                                                <img src="product/${o.id}.jpg" alt="">
+                                                <a href="cart?action=add&id=${o.id}" class="add_cart_btn">
+                                                    <span>
+                                                        Add To Cart
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="detail-box">
+                                                <a href="product?id=${o.id}"><h5>${o.name}</h5></a>
+                                                <div class="product_info">
+                                                    <h5>
+                                                        <span>$</span> ${o.price}
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
         </div>
-
         <!-- info section -->
         <section class="info_section ">
             <div class="container">
@@ -107,7 +115,7 @@
                             <h5>
                                 <a href="" class="navbar-brand">
                                     <span>
-                                        Mistify
+                                        Minics
                                     </span>
                                 </a>
                             </h5>
@@ -131,8 +139,7 @@
                                 Information
                             </h5>
                             <p>
-                                Eligendi sunt, provident, debitis nemo, facilis cupiditate velit libero dolorum
-                                aperiam enim nulla iste maxime corrupti ad illo libero minus.
+                                Eligendi sunt, provident, debitis nemo, facilis cupiditate velit libero dolorum aperiam enim nulla iste maxime corrupti ad illo libero minus.
                             </p>
                         </div>
                     </div>
@@ -217,11 +224,24 @@
 
         <!-- jQery -->
         <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                // Hide the list by default
+                $("#product-types-list").hide();
+
+                // Toggle the list when the header is clicked
+                $("#product-types-header").click(function () {
+                    $("#product-types-list").slideToggle();
+                });
+            });
+        </script>
+
         <!-- bootstrap js -->
         <script src="js/bootstrap.js"></script>
         <!-- custom js -->
         <script src="js/custom.js"></script>
 
     </body>
-
 </html>

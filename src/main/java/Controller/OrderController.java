@@ -4,6 +4,8 @@
  */
 package Controller;
 
+import Entity.Admin;
+import Entity.CartItem;
 import Entity.Order;
 import Entity.User;
 import Manager.OrderManager;
@@ -39,20 +41,52 @@ public class OrderController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        Admin admin = (Admin) session.getAttribute("admin");
         String action = request.getParameter("action");
 //        String orderId = request.getParameter("id");
         String destinate = "orders.jsp";
+        String title = "Orders";
         OrderManager orderManager = new OrderManager();
 
-        if (action != null) {
-        }
-        
         if (user != null) {
-            List<Order> userOrders = orderManager.getUserOrders(user);
-            System.out.println(userOrders.size());
-            request.setAttribute("orders", userOrders);
+            if (action != null) {
+                if (action.equals("get")) {
+                    int orderId = Integer.parseInt(request.getParameter("orderId"));
+                    Order order = orderManager.getOrder(orderId);
+                    request.setAttribute("order", order);
+                    request.setAttribute("title", "Order detail");
+                    destinate = "order_detail.jsp";
+                }
+            } else {
+                List<Order> userOrders = orderManager.getUserOrders(user);
+                request.setAttribute("orders", userOrders);
+                request.setAttribute("title", user.getName() + " orders");
+            }
         }
-        
+        if (admin != null && action != null) {
+            if (action.equals("all")) {
+                List<Order> userOrders = orderManager.getAllUserOrders();
+                request.setAttribute("ordersList", userOrders);
+                request.setAttribute("title", "All Orders");
+                destinate = "admin-order.jsp";
+            }
+            if (action.equals("get")) {
+                int orderId = Integer.parseInt(request.getParameter("orderId"));
+                Order order = orderManager.getOrder(orderId);
+                request.setAttribute("order", order);
+                request.setAttribute("title", "Order detail");
+                destinate = "order_detail.jsp";
+            }
+            if (action.equals("set")) {
+                int orderId = Integer.parseInt(request.getParameter("id"));
+                int status = Integer.parseInt(request.getParameter("status"));
+                System.out.println(orderId+"==="+status);
+                orderManager.setStatus(orderId, status);
+                destinate ="order?action=all";
+                response.sendRedirect(destinate);
+                return;
+            }
+        }
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(destinate);
         requestDispatcher.forward(request, response);
     }

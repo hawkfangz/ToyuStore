@@ -53,6 +53,15 @@
         <url-pattern>/admin-menu</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>admin-order</servlet-name>
+        <jsp-file>/admin-order.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin-order</servlet-name>
+        <url-pattern>/admin-order</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
         <servlet-name>user-form</servlet-name>
         <jsp-file>/user-form.jsp</jsp-file>
     </servlet>

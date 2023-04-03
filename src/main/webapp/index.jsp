@@ -22,7 +22,7 @@
                         <nav class="navbar navbar-expand-lg custom_nav-container ">
                             <a class="navbar-brand" href="index.jsp">
                                 <span>
-                                    Minics
+                                    Mistify
                                 </span>
                             </a>
 
@@ -115,7 +115,10 @@
                                                 Welcome to our shop
                                             </h1>
                                             <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quam velit saepe dolorem deserunt quo quidem ad optio.
+Welcome to our Mistique world! We are a premier online destination for all things anime, bringing you the latest and greatest in anime characters, collectibles, and games. Whether you're a fan of classic or contemporary anime, we've got you covered. Our extensive collection appeals to audiences of all ages, so there's something for everyone here. We also offer a range of Western-related figures for those looking to expand their collection beyond anime. Explore our world and discover the magic of anime with us.
+
+
+
                                             </p>
                                             <a href="">
                                                 Read More
@@ -434,7 +437,7 @@
                             <h5>
                                 <a href="" class="navbar-brand">
                                     <span>
-                                        Minics
+                                        Mistify
                                     </span>
                                 </a>
                             </h5>

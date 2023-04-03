@@ -8,7 +8,12 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,13 +42,13 @@ public class Order implements Serializable {
 
     private LocalDate date;
 
-    private String status;
+    private int status;
 
     @OneToMany(mappedBy = "order")
     private Set<CartItem> items;
 
     public Order() {
-        this.status = "placed";
+        this.status = 0;
     }
 
     public int getOrderId() {
@@ -76,20 +81,60 @@ public class Order implements Serializable {
         this.date = LocalDate.now();
     }
 
+//    public Set<CartItem> getItems() {
+//
+//        return items;
+//    }
+
     public Set<CartItem> getItems() {
-        return items;
+        TreeSet<CartItem> sortedItems = new TreeSet<>(Comparator.comparing(CartItem::getId));
+        sortedItems.addAll(items);
+        return sortedItems;
+    }
+    public List<CartItem> getItemsList(){
+        List<CartItem> itemsList = items.stream().collect(Collectors.toCollection(ArrayList::new));
+        
+        return itemsList;
     }
 
     public void setItems(Set<CartItem> items) {
         this.items = items;
     }
+    public int getStatus(){
+        return this.status;
+    }
+    public String getStatusString() {
+        String statusString = "N/A";
 
-    public String getStatus() {
-        return status;
+        if (this.status == -1) {
+            statusString = "Cancelled";
+        }
+        if (this.status == 0) {
+            statusString = "Placed";
+        }
+        if (this.status == 1) {
+            statusString = "Prepared";
+        }
+        if (this.status == 2) {
+            statusString = "Delivered";
+        }
+        //after customer review
+        if (this.status == 3) {
+            statusString = "Finished";
+        }
+
+        return statusString;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
+    }
+    public int itemCount(){
+        int size = 0;
+        for (CartItem item : items) {
+            size += item.getQuantity();
+        }
+        return size;
     }
 
     public String getPrice() {

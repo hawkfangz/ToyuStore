@@ -1,19 +1,17 @@
-<%-- Document : orders Created on : Mar 3, 2023, 6:38:07 PM Author : phanh --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%-- 
+    Document   : product.jsp
+    Created on : Feb 1, 2023, 6:40:53 AM
+    Author     : phanh
+--%>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    <c:set var="title" scope="session" value="Product"/>
+    <jsp:include page="header.jsp" /> 
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <jsp:include page="header.jsp" />
+    <body class="sub_page">
 
-        <title>Detail</title>
-    </head>
-
-    <body>
         <div class="hero_area">
             <!-- header section strats -->
             <header class="header_section">
@@ -27,17 +25,14 @@
                                 </span>
                             </a>
 
-                            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class=""> </span>
                             </button>
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav ">
                                     <li class="nav-item ">
-                                        <a class="nav-link" href="index.jsp">Home <span
-                                                class="sr-only">(current)</span></a>
+                                        <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="about.jsp"> About</a>
@@ -57,46 +52,58 @@
                     </div>
                 </div>
             </header>
+            <!-- end header section -->
         </div>
-        <!-- end header section code start here-->
-        <div class="container cart-box">
-            <table class="table">
-                <thead class="bg-primary text-light">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Number of Items</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <c:forEach var="order" items="${orders}">
-                    <thead class="bg-success text-light">
-                        <tr id="order">
-                            <th scope="col"> <a href="order?action=get&&orderId=${order.orderId}">${order.orderId}</a></th>
-                            <th scope="col">${order.date}</th>
-                            <th scope="col">${order.price}$</th>
-                            <th scope="col">${order.itemCount()}</th>
-                            <th scope="col">${order.getStatusString()}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:set var="index" value="0"/>
-                        <c:forEach var="item" items="${order.items}">
-                            <tr>
-                                <c:set var="index" value="${index + 1}"/>
-                                <th scope="row">${index}</th>
-                                <td>${item.product.name}</td>
-                                <td>${item.product.price}$</td>
-                                <td>${item.quantity}</td>
-                                <td>${item.price}$</td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </c:forEach>
-            </table>
 
-        </div>
+
+        <!-- product section -->
+
+        <section class="product_section layout_padding">
+            <div class="container">
+                <div class="heading_container heading_center">
+                    <h2>
+                        Our Products
+                    </h2>
+                </div>
+                <div class="row">
+                     <!--begin="${start}" end="${end}"-->
+                    <c:forEach items="${result}" var="o">
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="box">
+                                <div class="img-box">
+                                    <img src="product/${o.id}.jpg" alt="">
+                                    <a href="cart?action=add&id=${o.id}" class="add_cart_btn">
+                                        <span>
+                                            Add To Cart
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="detail-box">
+                                    <a href="product?id=${o.id}"><h5>${o.name}</h5></a>
+                                    <div class="product_info">
+                                        <h5>
+                                            <span>$</span> ${o.price}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+                <%--<c:set var="productList" value="${requestScope.productList}" />--%>
+                <div class="btn_box">
+                    <c:set var="pageAmount" value="${pages}" scope="request" />
+                    <c:forEach var="i" begin="1" end="${pages}">
+                        <a href="product?page=${i}" class="view_more-link">
+                            ${i}
+                        </a>
+                    </c:forEach>
+                </div>
+            </div>
+        </section>
+
+        <!-- end product section -->
+
 
         <!-- info section -->
         <section class="info_section ">
@@ -131,8 +138,7 @@
                                 Information
                             </h5>
                             <p>
-                                Eligendi sunt, provident, debitis nemo, facilis cupiditate velit libero dolorum
-                                aperiam enim nulla iste maxime corrupti ad illo libero minus.
+                                The site launched around March 2023 since the author can't find good official source to buy collectibles so he himself try to become one.
                             </p>
                         </div>
                     </div>
@@ -221,6 +227,7 @@
         <script src="js/bootstrap.js"></script>
         <!-- custom js -->
         <script src="js/custom.js"></script>
+
 
     </body>
 

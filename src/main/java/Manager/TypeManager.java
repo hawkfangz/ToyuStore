@@ -67,6 +67,18 @@ public class TypeManager {
             session.close();
         }
     }
+    public List<Product> getProductByType(int id) {
+        ProductType type = null;
+        List<Product> result;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            type = session.get(ProductType.class, id);
+            result = new ArrayList<>(type.getProducts());
+            return result;
+        } finally {
+            session.close();
+        }
+    }
 
     public List<ProductType> getRemainedTypes(List<ProductType> productTypes, List<ProductType> allTypes) {
 

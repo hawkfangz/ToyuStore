@@ -23,12 +23,12 @@
                     </span>
                 </a>
             </div>
-            <from class="search_form">
-                <input type="text" class="form-control" placeholder="Search here...">
+            <form action= "Search" method="GET" class="search_form">
+                <input type="text" name="filter" class="form-control" placeholder="Search here...">
                 <button class="" type="submit">
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
-            </from>
+            </form>
             <div class="user_option_box">
                 <c:if test="${sessionScope.user == null}">
                     <a href="login" class="account-link">
@@ -71,7 +71,12 @@
                     </a>
                 </c:if>
                 <c:if test="${sessionScope.admin != null}">
-                   
+                    <a href="admin-menu" class="account-link">
+                        <i class="fa fa-dashboard" aria-hidden="true"></i>
+                        <span>
+                            Menu
+                        </span>
+                    </a>
                     <a href="admin?action=logout" class="account-link">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         <span>

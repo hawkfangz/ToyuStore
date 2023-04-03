@@ -47,13 +47,25 @@ public class Cart {
 
 //  addQuantity add 1 to item quantity
     public void addItem(CartItem item) {
-        int itemPosition = itemExisted(item);
+        int itemPosition = itemExisted(item.getProduct().getId());
         if (itemPosition == -1) {
             cart.add(item);
         } else {
             cart.get(itemPosition).addQuantity();
             cart.get(itemPosition).setPrice();
         }
+    }
+
+    //  minus 1 to item quantity
+    public int minusItem(CartItem item) {
+        int itemPosition = itemExisted(item.getProduct().getId());
+        if (itemPosition == -1) {
+            cart.add(item);
+        } else {
+            cart.get(itemPosition).minusQuantity();
+            cart.get(itemPosition).setPrice();
+        }
+        return cart.get(itemPosition).getQuantity();
     }
 
     public void removeItem(int id) {
@@ -64,10 +76,10 @@ public class Cart {
         }
     }
 
-    public int itemExisted(CartItem checkingItem) {
+    public int itemExisted(int checkingItem) {
 
         for (int index = 0; index < cart.size(); index++) {
-            if (cart.get(index).getProduct().getId() == checkingItem.getProduct().getId()) {
+            if (cart.get(index).getProduct().getId() == checkingItem) {
                 return index;
             }
         }

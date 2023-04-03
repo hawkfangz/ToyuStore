@@ -4,15 +4,13 @@
  */
 package Controller;
 
-import Entity.Manufacturer;
 import Entity.Product;
-import Entity.ProductType;
+import Manager.ManufacturerManager;
 import Manager.ProductManager;
 import Manager.TypeManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Set;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author phanh
  */
-@WebServlet(name = "product", urlPatterns = {"/product"})
-public class ProductController extends HttpServlet {
+@WebServlet(name = "Search", urlPatterns = {"/Search"})
+public class SearchController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,62 +37,58 @@ public class ProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-
-        String path = "product-2.jsp";
+        String type;
+        String keyword;
+        String path = "product-result.jsp";
         int page;
-        int start;
-        int end;
-        if (request.getParameter("path") != null) {
-            path = "index.jsp";
-        }
-        String id = request.getParameter("id");
+        ProductManager productManager;
+        TypeManager typeManager;
+        ManufacturerManager manufacturerManager;
+
+        List<Product> result;
+
         String pageNumber = request.getParameter("page");
         if (pageNumber != null) {
             page = Integer.parseInt(pageNumber);
             if (page < 0) {
                 page = 1;
             }
-            if (page > getPageLimit()) {
-                page = getPageLimit();
-            }
+//            if (page > getListResult(keyword).size()/9) {
+//                page = getPageLimit();
+//            }
         } else {
             page = 1;
         }
-        start = (page - 1) * 15;
-        end = start + 15 - 1;
-        List<Product> productList = (List<Product>) request.getAttribute("productList");
-        List<Product> allProductList = (List<Product>) request.getAttribute("allProductList");
-        List<ProductType> allTypes;
-        ProductManager productManager = new ProductManager();
-        TypeManager typeManager = new TypeManager();
 
-        if (id != null) {
-            path = "Detail";
-            Product requestProduct = productManager.getProduct(Integer.parseInt(id));
-            Set<ProductType> productTypes = requestProduct.getTypes();
-            Set<Manufacturer> productManufacturers = requestProduct.getManufacturers();
-            request.setAttribute("productTypes", productTypes);
-            request.setAttribute("productManufacturers", productManufacturers);
-            request.setAttribute("product", requestProduct);
-        } else if (productList == null || allProductList == null) {
-            productList = productManager.getActiveProducts();
-            allProductList = productManager.getAllProducts();
-            allTypes = typeManager.getActiveTypes();
-            request.setAttribute("productList", productList);
-            request.setAttribute("typeList", allTypes);
-            request.setAttribute("allProductList", allProductList);
+        int start = (page - 1) * 9;
+        int end = start + 9 - 1;
+
+        type = request.getParameter("type");
+        keyword = request.getParameter("filter");
+
+        if (type == null) {
+            type = "product";
         }
-        if (productList != null) {
-            int pageAmount = getPageLimit();
-            request.setAttribute("pages", pageAmount);
+        if (keyword == null) {
+            keyword = "";
         }
+        if (type.equalsIgnoreCase("product")) {
+            productManager = new ProductManager();
+            result = productManager.search(keyword);
+            System.out.println("Result size:" + result.size());
+            request.setAttribute("result", result);
+        }
+        if (type.equals("type")) {
+            typeManager = new TypeManager();
+            int id = Integer.parseInt(keyword);
+            result = typeManager.getProductByType(id);
+            request.setAttribute("result", result);
+        }
+
         request.setAttribute("start", start);
         request.setAttribute("end", end);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher(path);
         requestDispatcher.forward(request, response);
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -136,12 +130,9 @@ public class ProductController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public int getPageLimit() {
+    public List<Product> getListResult(String keyword) {
         ProductManager productManager = new ProductManager();
-        List<Product> productList = productManager.getActiveProducts();
-        float pages = productList.size() / 9;
-        pages = (float) Math.ceil(pages);
-        int pageAmount = (int) pages;
-        return pageAmount;
+        List<Product> result = productManager.search(keyword);
+        return result;
     }
 }

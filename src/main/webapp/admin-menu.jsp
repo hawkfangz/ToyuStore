@@ -18,7 +18,7 @@
                         <nav class="navbar navbar-expand-lg custom_nav-container ">
                             <a class="navbar-brand" href="index.jsp">
                                 <span>
-                                    Minics
+                                    Mistify
                                 </span>
                             </a>
 
@@ -56,9 +56,6 @@
             <c:redirect url="admin" />
         </c:if>
 
-        <div class="container">
-
-        </div>
 
         <section class="why_us_section layout_padding">
             <div class="container">
@@ -68,7 +65,7 @@
                     </h2>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="box ">
                             <div class="img-box">
                                 <img src="images/w1.png" alt="">
@@ -83,7 +80,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="box ">
                             <div class="img-box">
                                 <img src="images/w2.png" alt="">
@@ -98,7 +95,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="box ">
                             <div class="img-box">
                                 <img src="images/w3.png" alt="">
@@ -109,6 +106,21 @@
                                 </h5>
                                 <p>
                                     Manage types and it products
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="box ">
+                            <div class="img-box">
+                                <img src="images/w4.png" alt="">
+                            </div>
+                            <div class="detail-box">
+                                <h5>
+                                    <a class="user-btn" href="order?action=all">Users Orders</a><br>
+                                </h5>
+                                <p>
+                                    Update users orders
                                 </p>
                             </div>
                         </div>
@@ -131,7 +143,7 @@
                             <h5>
                                 <a href="" class="navbar-brand">
                                     <span>
-                                        Minics
+                                        Mistify
                                     </span>
                                 </a>
                             </h5>

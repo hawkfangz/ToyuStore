@@ -10,6 +10,9 @@ import Entity.CartItem;
 import Entity.Order;
 import Util.HibernateUtil;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -34,6 +37,16 @@ public class OrderManager {
         }
     }
 
+    public Order getOrder(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Order order = session.load(Order.class, id);
+            return order;
+        } finally {
+            session.close();
+        }
+    }
+
     public void addItemsToOrder(Order order, Cart cart) {
         Session session = HibernateUtil.getSessionFactory().openSession();
 
@@ -50,6 +63,21 @@ public class OrderManager {
 
     }
 
+    public void setStatus(int id, int status) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            session.getTransaction().begin();
+            
+            Order order = session.load(Order.class, id);
+            order.setStatus(status);
+            session.saveOrUpdate(order);
+            
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+        }
+    }
+
     public List<Order> getUserOrders(User customer) {
         List<Order> userOrders = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -59,6 +87,21 @@ public class OrderManager {
             query.setParameter("id", customer.getCustomerId());
 
             userOrders = query.list();
+            userOrders.sort((o1, o2) -> o2.getOrderId() - o1.getOrderId());
+
+        } finally {
+            session.close();
+        }
+        return userOrders;
+    }
+
+    public List<Order> getAllUserOrders() {
+        List<Order> userOrders = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Query<Order> query = session.createQuery("FROM Order o ORDER BY o.orderId DESC");
+            userOrders = query.list();
+            userOrders.sort((o1, o2) -> o2.getOrderId() - o1.getOrderId());
 
         } finally {
             session.close();

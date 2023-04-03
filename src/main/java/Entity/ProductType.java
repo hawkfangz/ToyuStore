@@ -67,6 +67,9 @@ public class ProductType implements Serializable {
     public Set<Product> getProducts() {
         return products;
     }
+    public int getQuantity(){
+        return products.size();
+    }
 
     public void setProducts(Set<Product> products) {
         this.products = products;

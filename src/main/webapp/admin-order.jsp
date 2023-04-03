@@ -1,3 +1,8 @@
+<%-- 
+    Document   : admin-order
+    Created on : Mar 13, 2023, 9:48:14 PM
+    Author     : phanh
+--%>
 <%-- Document : orders Created on : Mar 3, 2023, 6:38:07 PM Author : phanh --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
@@ -9,8 +14,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="header.jsp" />
-
-        <title>Detail</title>
     </head>
 
     <body>
@@ -59,6 +62,10 @@
             </header>
         </div>
         <!-- end header section code start here-->
+        <c:if test="${empty ordersList}">
+            <c:redirect url="order?action=all" />
+        </c:if>
+
         <div class="container cart-box">
             <table class="table">
                 <thead class="bg-primary text-light">
@@ -68,9 +75,10 @@
                         <th scope="col">Price</th>
                         <th scope="col">Number of Items</th>
                         <th scope="col">Status</th>
+                        <!--<th scope="col">Action</th>-->
                     </tr>
                 </thead>
-                <c:forEach var="order" items="${orders}">
+                <c:forEach var="order" items="${ordersList}">
                     <thead class="bg-success text-light">
                         <tr id="order">
                             <th scope="col"> <a href="order?action=get&&orderId=${order.orderId}">${order.orderId}</a></th>
@@ -83,12 +91,12 @@
                     <tbody>
                         <c:set var="index" value="0"/>
                         <c:forEach var="item" items="${order.items}">
+                            <c:set var="index" value="${index+1}"/>
                             <tr>
-                                <c:set var="index" value="${index + 1}"/>
                                 <th scope="row">${index}</th>
                                 <td>${item.product.name}</td>
                                 <td>${item.product.price}$</td>
-                                <td>${item.quantity}</td>
+                                <td>X${item.quantity}</td>
                                 <td>${item.price}$</td>
                             </tr>
                         </c:forEach>

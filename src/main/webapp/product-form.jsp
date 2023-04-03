@@ -21,7 +21,7 @@
                         <nav class="navbar navbar-expand-lg custom_nav-container ">
                             <a class="navbar-brand" href="index.jsp">
                                 <span>
-                                    Minics
+                                    Mistify
                                 </span>
                             </a>
 
@@ -79,7 +79,7 @@
                     <input type="hidden" name="action" value="do-create">
                     <input type="text" name="name" class="form-control" placeholder="Name" ">
                     <br>
-                    <input type="number" name="price" class="form-control" placeholder="Price. . ." >
+                    <input type="number" name="price" min="10" class="form-control" placeholder="Price. . ." >
                     <br>
                     <textarea class="form-control" name="description" rows="3" placeholder="Description..."></textarea>
                     <br>
@@ -131,7 +131,7 @@
                     <input type="hidden" name="id" value="${product.id}">
                     <input type="text" name="name" class="form-control" placeholder="Name" value="${product.name}">
                     <br>
-                    <input type="number" name="price" class="form-control" placeholder="Price. . ." value="${product.price}">
+                    <input type="number" name="price" min="10" class="form-control" placeholder="Price. . ." value="${product.price}">
                     <br>
                     <textarea class="form-control" name="description" rows="3" placeholder="Description...">${product.des}</textarea>
                     <br>
@@ -173,7 +173,7 @@
                             <h5>
                                 <a href="" class="navbar-brand">
                                     <span>
-                                        Minics
+                                        Mistify
                                     </span>
                                 </a>
                             </h5>

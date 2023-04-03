@@ -137,7 +137,6 @@ public class AdminProductController extends HttpServlet {
 
                 outStream.close();
                 fileContent.close();
-                
 
                 path = "product";
             }
@@ -172,18 +171,18 @@ public class AdminProductController extends HttpServlet {
                 //Image session
                 Part filePart = request.getPart("image");
                 String fileName = request.getParameter("id") + ".jpg";
+                if (filePart != null && filePart.getSize() > 0) {
+                    InputStream fileContent = filePart.getInputStream();
+                    byte[] buffer = new byte[fileContent.available()];
+                    fileContent.read(buffer);
 
-                InputStream fileContent = filePart.getInputStream();
-                byte[] buffer = new byte[fileContent.available()];
-                fileContent.read(buffer);
-
-                String savePath = request.getServletContext().getRealPath("/product/");
-                File targetFile = new File(savePath + fileName);
-                OutputStream outStream = new FileOutputStream(targetFile);
-                outStream.write(buffer);
-
-                outStream.close();
-                fileContent.close();
+                    String savePath = request.getServletContext().getRealPath("/product/");
+                    File targetFile = new File(savePath + fileName);
+                    OutputStream outStream = new FileOutputStream(targetFile);
+                    outStream.write(buffer);
+                    outStream.close();
+                    fileContent.close();
+                }
                 //text session here
                 int id = Integer.parseInt(request.getParameter("id"));
                 String name = request.getParameter("name");

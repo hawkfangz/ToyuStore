@@ -1,18 +1,15 @@
-<%-- Document : orders Created on : Mar 3, 2023, 6:38:07 PM Author : phanh --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <jsp:include page="header.jsp" />
+        <jsp:include page="header.jsp" /> 
 
         <title>Detail</title>
     </head>
-
     <body>
         <div class="hero_area">
             <!-- header section strats -->
@@ -27,23 +24,20 @@
                                 </span>
                             </a>
 
-                            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class=""> </span>
                             </button>
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav ">
                                     <li class="nav-item ">
-                                        <a class="nav-link" href="index.jsp">Home <span
-                                                class="sr-only">(current)</span></a>
+                                        <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="about.jsp"> About</a>
                                     </li>
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="product">Products</a>
+                                        <a class="nav-link" href="Product">Products</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="why.jsp">Why Us</a>
@@ -59,45 +53,81 @@
             </header>
         </div>
         <!-- end header section code start here-->
-        <div class="container cart-box">
-            <table class="table">
-                <thead class="bg-primary text-light">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Number of Items</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <c:forEach var="order" items="${orders}">
-                    <thead class="bg-success text-light">
-                        <tr id="order">
-                            <th scope="col"> <a href="order?action=get&&orderId=${order.orderId}">${order.orderId}</a></th>
-                            <th scope="col">${order.date}</th>
-                            <th scope="col">${order.price}$</th>
-                            <th scope="col">${order.itemCount()}</th>
-                            <th scope="col">${order.getStatusString()}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:set var="index" value="0"/>
-                        <c:forEach var="item" items="${order.items}">
-                            <tr>
-                                <c:set var="index" value="${index + 1}"/>
-                                <th scope="row">${index}</th>
-                                <td>${item.product.name}</td>
-                                <td>${item.product.price}$</td>
-                                <td>${item.quantity}</td>
-                                <td>${item.price}$</td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </c:forEach>
-            </table>
+        <div class="container px-3 my-5 clearfix">
+            <!-- Shopping cart table -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Order Detail</h2>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered m-0">
+                            <thead>
+                                <tr>
+                                    <!-- Set columns width -->
+                                    <th class="text-center py-3 px-4" style="min-width: 400px;">Product Name &amp; Details</th>
+                                    <th class="text-right py-3 px-4" style="width: 100px;">Price</th>
+                                    <th class="text-center py-3 px-4" style="width: 120px;">Quantity</th>
+                                    <th class="text-right py-3 px-4" style="width: 100px;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="item" items="${order.items}">
+                                    <tr>
+                                        <td class="p-4">
+                                            <div class="media align-items-center">
+                                                <img src="product/${item.product.id}.jpg" class="d-block ui-w-40 ui-bordered mr-4" alt="">
+                                                <div class="media-body">
+                                                    <a href="#" class="d-block text-dark">${item.product.name}</a>
 
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-right font-weight-semibold align-middle p-4">$${item.product.price}</td>
+                                        <td class="align-middle p-4"><input type="text" class="form-control text-center" disabled value="${item.quantity}"></td>
+                                        <td class="text-right font-weight-semibold align-middle p-4">${item.getPriceString()}$</td>
+                                    </tr>
+                                </c:forEach> 
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- / Shopping cart table -->
+
+                    <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
+                        <div class="mt-4">
+
+                        </div>
+                        <div class="d-flex">
+                            <div class="text-right mt-4 mr-5">
+                            </div>
+                            <div class="text-right mt-4">
+                                <label class="text-muted font-weight-normal m-0">Total price</label>
+                                <div class="text-large"><strong>$${order.getPrice()}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="float-right">
+                        <button type="button" class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to shopping</button>
+                        <c:if test="${sessionScope.admin != null}">
+                            <div class="dropdown">
+                                <button class="dropbtn">${order.getStatusString()}</button>
+                                <div class="dropdown-content">
+                                    <a href="order?action=set&&status=-1&&id=${order.orderId}">Cancelled</a>
+                                    <a href="order?action=set&&status=0&&id=${order.orderId}">Placed</a>
+                                    <a href="order?action=set&&status=1&&id=${order.orderId}">Prepared</a>
+                                    <a href="order?action=set&&status=2&&id=${order.orderId}">Delivered</a>
+                                    <a href="order?action=set&&status=3&&id=${order.orderId}">Finished</a>
+
+                                </div>
+                            </div>
+                        </c:if>
+                    </div>
+
+                </div>
+            </div>
         </div>
-
         <!-- info section -->
         <section class="info_section ">
             <div class="container">
@@ -131,8 +161,7 @@
                                 Information
                             </h5>
                             <p>
-                                Eligendi sunt, provident, debitis nemo, facilis cupiditate velit libero dolorum
-                                aperiam enim nulla iste maxime corrupti ad illo libero minus.
+                                Eligendi sunt, provident, debitis nemo, facilis cupiditate velit libero dolorum aperiam enim nulla iste maxime corrupti ad illo libero minus.
                             </p>
                         </div>
                     </div>
@@ -223,5 +252,4 @@
         <script src="js/custom.js"></script>
 
     </body>
-
 </html>

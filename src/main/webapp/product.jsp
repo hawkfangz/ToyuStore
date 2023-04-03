@@ -21,7 +21,7 @@
                         <nav class="navbar navbar-expand-lg custom_nav-container ">
                             <a class="navbar-brand" href="index.jsp">
                                 <span>
-                                    Minics
+                                    Mistify
                                 </span>
                             </a>
 
@@ -57,7 +57,6 @@
 
 
         <!-- product section -->
-
         <section class="product_section layout_padding">
             <div class="container">
                 <div class="heading_container heading_center">
@@ -71,7 +70,8 @@
                         <div class="row">
                             <div class="product-detail media">
                                 <div class="img-container">
-                                    <img class="align-self-start mr-3" src="product/${o.id}.jpg" onerror="this.src='product/undefined.png';">
+                                    <!--onerror="this.src='product/undefined.png';"-->
+                                    <img class="align-self-start mr-3" src="product/${o.id}.jpg" >
                                 </div>
                                 <div class="media-body">
                                     <h5 class="mt-0">${o.name}</h5>
@@ -120,6 +120,7 @@
                 </c:if>
 
                 <div class="btn_box">
+                    <c:set var="pageAmount" value="${pages}" scope="request" />
                     <c:forEach var="i" begin="1" end="${pages}">
                         <a href="product?page=${i}" class="view_more-link">
                             ${i}
@@ -141,7 +142,7 @@
                             <h5>
                                 <a href="" class="navbar-brand">
                                     <span>
-                                        Minics
+                                        Mistify
                                     </span>
                                 </a>
                             </h5>

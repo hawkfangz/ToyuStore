@@ -6,6 +6,12 @@ package Manager;
 
 import Entity.Admin;
 import Util.HibernateUtil;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -19,16 +25,36 @@ public class AdminManager {
         Admin admin = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-//            Get object list from table, Query should be from class name 
-            Query<Admin> query = session.createQuery("FROM Admin WHERE account = :account AND password = :password");
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Admin> criteriaQuery = criteriaBuilder.createQuery(Admin.class);
+            Root<Admin> root = criteriaQuery.from(Admin.class);
+            criteriaQuery.select(root);
+            criteriaQuery.where(criteriaBuilder.and(
+                    criteriaBuilder.equal(root.get("account"), acc),
+                    criteriaBuilder.equal(root.get("password"), hashMD5(pass)),
+                    criteriaBuilder.equal(root.get("status"), 1)
+            ));
 
-            query.setParameter("account", acc);
-            query.setParameter("password", pass);
-
-            admin = (Admin) query.uniqueResult();
+            admin = session.createQuery(criteriaQuery).uniqueResult();
             return admin;
         } finally {
             session.close();
+        }
+    }
+    
+    private String hashMD5(String input) {
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 }
