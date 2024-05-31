@@ -13,25 +13,25 @@ import javax.persistence.*;
  * @author Hau
  */
 @Entity
-@Table(name = "product_type")
-public class ProductType implements Serializable {
+@Table(name = "category")
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "type_id")
+    @Column(name = "category_id")
     private int id;
 
-    @Column(name = "type_name")
+    @Column(name = "category_name")
     private String name;
     @Column(name = "description")
     private String des;
     @Column(name = "status")
     private int status;
 
-    @ManyToMany(mappedBy = "types")
+    @ManyToMany(mappedBy = "categories")
     Set<Product> products;
 
-    public ProductType() {
+    public Category() {
         this.status = 0;
     }
 

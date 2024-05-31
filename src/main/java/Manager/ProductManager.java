@@ -6,7 +6,7 @@ package Manager;
 
 import Entity.Manufacturer;
 import Entity.Product;
-import Entity.ProductType;
+import Entity.Category;
 import Util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -69,7 +69,7 @@ public class ProductManager {
 
             Product returnProduct = product;
 
-            returnProduct.setTypes(product.getTypes());
+            returnProduct.setTypes(product.getCategories());
 
             return returnProduct;
         } finally {
@@ -81,7 +81,7 @@ public class ProductManager {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
 //          Lay tat ca product co type id
-            ProductType type = session.get(ProductType.class, typeId);
+            Category type = session.get(Category.class, typeId);
 
             Set<Product> products = type.getProducts();
 
@@ -106,11 +106,11 @@ public class ProductManager {
         try {
             session.getTransaction().begin();
 
-            Set<ProductType> typeSet = new HashSet<>();
+            Set<Category> typeSet = new HashSet<>();
 //          Get types from type table as object, then add to typeSet
 
             for (int typeId : selectedTypeId) {
-                ProductType type = session.get(ProductType.class,
+                Category type = session.get(Category.class,
                         typeId);
                 typeSet.add(type);
             }
@@ -154,10 +154,10 @@ public class ProductManager {
                     productId);
 
 //          Get type from type table as object, 111 is it ID, not line number
-            Set<ProductType> typeSet = new HashSet<>();
+            Set<Category> typeSet = new HashSet<>();
 
             for (int typeId : selectedTypeId) {
-                ProductType type = session.get(ProductType.class,
+                Category type = session.get(Category.class,
                         typeId);
                 typeSet.add(type);
             }

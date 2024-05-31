@@ -4,8 +4,8 @@
  */
 package Controller;
 
-import Entity.ProductType;
-import Manager.TypeManager;
+import Entity.Category;
+import Manager.CategoryManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author phanh
  */
 @WebServlet(name = "types", urlPatterns = {"/types"})
-public class TypesController extends HttpServlet {
+public class CategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,12 +46,12 @@ response.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         String sort = request.getParameter("sort");
 
-        TypeManager typeManager = new TypeManager();
+        CategoryManager categoryManager = new CategoryManager();
         if (action != null) {
             System.out.println(action);
         }
         if (sort == null && action == null) {
-            List<ProductType> allTypes = typeManager.getAllType();
+            List<Category> allTypes = categoryManager.getAllType();
             request.setAttribute("typeList", allTypes);
         }
         if (action != null) {
@@ -62,7 +62,7 @@ response.setCharacterEncoding("UTF-8");
             id = Integer.parseInt(strId);
 
             if (action.equalsIgnoreCase("toggle")) {
-                typeManager.toggleType(id);
+                categoryManager.toggleType(id);
             }
             if (action.equalsIgnoreCase("create")) {
                 destinate = "type_form.jsp";
@@ -77,11 +77,11 @@ response.setCharacterEncoding("UTF-8");
                 if (statusP != null) {
                     status = 1;
                 }
-                typeManager.addType(name, description, status);
+                categoryManager.addType(name, description, status);
             }
             if (action.equalsIgnoreCase("edit")) {
                 destinate = "type_form.jsp";
-                ProductType type = typeManager.getType(id);
+                Category type = categoryManager.getType(id);
                 title = "Edit "+type.getName();
                 request.setAttribute("type", type);
                 request.setAttribute("action", "edit");
@@ -95,7 +95,7 @@ response.setCharacterEncoding("UTF-8");
                 if (statusP != null) {
                     status = 1;
                 }
-                typeManager.updateType(id, name, description, status);
+                categoryManager.updateType(id, name, description, status);
             }
         }
 

@@ -33,15 +33,15 @@ public class Product implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "type_product",
+            name = "product_categories",
             joinColumns = {
                 @JoinColumn(name = "product_id")
             },
             inverseJoinColumns = {
-                @JoinColumn(name = "type_id")
+                @JoinColumn(name = "category_id")
             }
     )
-    private Set<ProductType> types;
+    private Set<Category> categories;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -104,12 +104,12 @@ public class Product implements Serializable {
         this.status = status;
     }
     
-    public Set<ProductType> getTypes() {
-        return types;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setTypes(Set<ProductType> types) {
-        this.types = types;
+    public void setTypes(Set<Category> categories) {
+        this.categories = categories;
     }
 
 

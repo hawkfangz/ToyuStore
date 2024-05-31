@@ -1,17 +1,20 @@
 <%-- 
-    Document   : product.jsp
-    Created on : Feb 1, 2023, 6:40:53 AM
+    Document   : product
+    Created on : Apr 4, 2023, 12:05:01 AM
     Author     : phanh
 --%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
-    <c:set var="title" scope="session" value="Product"/>
-    <jsp:include page="header.jsp" /> 
-
-    <body class="sub_page">
-
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <jsp:include page="header.jsp" /> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
         <div class="hero_area">
             <!-- header section strats -->
             <header class="header_section">
@@ -52,87 +55,57 @@
                     </div>
                 </div>
             </header>
-            <!-- end header section -->
         </div>
-
-
-        <!-- product section -->
-        <section class="product_section layout_padding">
-            <div class="container">
-                <div class="heading_container heading_center">
-                    <h2>
-                        Our Products
-                    </h2>
-                </div>
-                <c:if test="${sessionScope.admin != null}">
-                    <a class="btn btn-primary" href="AdminProduct?action=create">Create</a>
-                    <c:forEach items="${allProductList}" var="o" begin="${start}" end="${end}">
-                        <div class="row">
-                            <div class="product-detail media">
-                                <div class="img-container">
-                                    <!--onerror="this.src='product/undefined.png';"-->
-                                    <img class="align-self-start mr-3" src="product/${o.id}.jpg" >
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="mt-0">${o.name}</h5>
-                                    <p>Price: ${o.price}</p>
-                                    <p>Desciption: ${o.des}</p>
-                                    <p>
-                                        <a class="btn btn-primary" href="AdminProduct?action=edit&id=${o.id}">Edit</a>
-                                        <c:if test="${o.status == 1}">
-                                            <a class="btn btn-danger" href="AdminProduct?action=toggle&id=${o.id}">Disable</a>
-                                        </c:if>
-                                        <c:if test="${o.status == 0}">
-                                            <a class="btn btn-success " href="AdminProduct?action=toggle&id=${o.id}">Enable</a>
-                                        </c:if>
-                                    </p>
-                                </div>
-                            </div>
+        <!-- end header section code start here-->
+        <div class="product-container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-chevron-down mr-2"></i>Product Types
                         </div>
-                    </c:forEach>
-                </c:if>
-                <c:if test="${sessionScope.admin == null}">
-                    <div class="row">
-                        <c:forEach items="${productList}" var="o" begin="${start}" end="${end}">
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="box">
-                                    <div class="img-box">
-                                        <img src="product/${o.id}.jpg" alt="">
-                                        <a href="cart?action=add&id=${o.id}" class="add_cart_btn">
-                                            <span>
-                                                Add To Cart
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <div class="detail-box">
-                                        <a href="product?id=${o.id}"><h5>${o.name}</h5></a>
-                                        <div class="product_info">
-                                            <h5>
-                                                <span>$</span> ${o.price}
-                                            </h5>
+                        <ul class="list-group list-group-flush">
+                            <c:forEach items="${typeList}" var="type">
+                                <li class="list-group-item"><a href="Search?type=type&&filter=${type.id}">${type.name}(${type.quantity})</a>  </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                    
+                </div>
+                <div class="col-md-10">
+                    <div class="card">
+                        <div class="card-header">Products</div>
+                        <div class="card-body product_section">
+                            <div class="row">
+                                <c:forEach items="${productList}" var="o" begin="${start}" end="${end}">
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="box">
+                                            <div class="img-box">
+                                                <img src="product/${o.id}.jpg" alt="">
+                                                <a href="cart?action=add&id=${o.id}" class="add_cart_btn">
+                                                    <span>
+                                                        Add To Cart
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="detail-box">
+                                                <a href="product?id=${o.id}"><h5>${o.name}</h5></a>
+                                                <div class="product_info">
+                                                    <h5>
+                                                        <span>$</span> ${o.price}
+                                                    </h5>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </c:forEach>
                             </div>
-                        </c:forEach>
+                        </div>
                     </div>
-                    <c:set var="productList" value="${requestScope.productList}" />
-                </c:if>
 
-                <div class="btn_box">
-                    <c:set var="pageAmount" value="${pages}" scope="request" />
-                    <c:forEach var="i" begin="1" end="${pages}">
-                        <a href="product?page=${i}" class="view_more-link">
-                            ${i}
-                        </a>
-                    </c:forEach>
                 </div>
             </div>
-        </section>
-
-        <!-- end product section -->
-
-
+        </div>
         <!-- info section -->
         <section class="info_section ">
             <div class="container">
@@ -142,7 +115,7 @@
                             <h5>
                                 <a href="" class="navbar-brand">
                                     <span>
-                                        Mistify
+                                        Minics
                                     </span>
                                 </a>
                             </h5>
@@ -166,7 +139,7 @@
                                 Information
                             </h5>
                             <p>
-                                The site launched around March 2023 since the author can't find good official source to buy collectibles so he himself try to become one.
+                                Eligendi sunt, provident, debitis nemo, facilis cupiditate velit libero dolorum aperiam enim nulla iste maxime corrupti ad illo libero minus.
                             </p>
                         </div>
                     </div>
@@ -251,12 +224,24 @@
 
         <!-- jQery -->
         <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                // Hide the list by default
+                $("#product-types-list").hide();
+
+                // Toggle the list when the header is clicked
+                $("#product-types-header").click(function () {
+                    $("#product-types-list").slideToggle();
+                });
+            });
+        </script>
+
         <!-- bootstrap js -->
         <script src="js/bootstrap.js"></script>
         <!-- custom js -->
         <script src="js/custom.js"></script>
 
-
     </body>
-
 </html>

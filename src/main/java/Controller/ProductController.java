@@ -6,9 +6,9 @@ package Controller;
 
 import Entity.Manufacturer;
 import Entity.Product;
-import Entity.ProductType;
+import Entity.Category;
 import Manager.ProductManager;
-import Manager.TypeManager;
+import Manager.CategoryManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -24,17 +24,17 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author phanh
  */
-@WebServlet(name = "product", urlPatterns = {"/product"})
+@WebServlet(name = "product", urlPatterns = { "/product" })
 public class ProductController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,7 +42,7 @@ public class ProductController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        String path = "product-2.jsp";
+        String path = "product.jsp";
         int page;
         int start;
         int end;
@@ -66,14 +66,14 @@ public class ProductController extends HttpServlet {
         end = start + 15 - 1;
         List<Product> productList = (List<Product>) request.getAttribute("productList");
         List<Product> allProductList = (List<Product>) request.getAttribute("allProductList");
-        List<ProductType> allTypes;
+        List<Category> allTypes;
         ProductManager productManager = new ProductManager();
-        TypeManager typeManager = new TypeManager();
+        CategoryManager typeManager = new CategoryManager();
 
         if (id != null) {
             path = "Detail";
             Product requestProduct = productManager.getProduct(Integer.parseInt(id));
-            Set<ProductType> productTypes = requestProduct.getTypes();
+            Set<Category> productTypes = requestProduct.getCategories();
             Set<Manufacturer> productManufacturers = requestProduct.getManufacturers();
             request.setAttribute("productTypes", productTypes);
             request.setAttribute("productManufacturers", productManufacturers);
@@ -97,14 +97,15 @@ public class ProductController extends HttpServlet {
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -115,10 +116,10 @@ public class ProductController extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

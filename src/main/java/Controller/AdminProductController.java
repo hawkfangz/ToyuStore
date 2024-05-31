@@ -6,10 +6,10 @@ package Controller;
 
 import Entity.Manufacturer;
 import Entity.Product;
-import Entity.ProductType;
+import Entity.Category;
 import Manager.ManufacturerManager;
 import Manager.ProductManager;
-import Manager.TypeManager;
+import Manager.CategoryManager;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -51,12 +51,12 @@ public class AdminProductController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
+        
         String path = "product";
-
         String action = request.getParameter("action");
 
         HttpSession session = request.getSession();
@@ -67,7 +67,7 @@ public class AdminProductController extends HttpServlet {
 
         ProductManager productManager = new ProductManager();
 
-        TypeManager typeManager = new TypeManager();
+        CategoryManager typeManager = new CategoryManager();
 
         ManufacturerManager manufacturerManager = new ManufacturerManager();
         boolean isAdmin = false;
@@ -85,7 +85,7 @@ public class AdminProductController extends HttpServlet {
 
             if (action.equals("create")) {
 
-                List<ProductType> allTypes = typeManager.getAllType();
+                List<Category> allTypes = typeManager.getAllType();
                 List<Manufacturer> allManufacturers = manufacturerManager.getManufacturersList();
                 String action2 = "Create";
                 request.setAttribute("do-what", action2);
@@ -148,11 +148,11 @@ public class AdminProductController extends HttpServlet {
                 String productId = request.getParameter("id");
                 Product requestProduct = productManager.getProduct(Integer.parseInt(productId));
 
-                List<ProductType> allTypes = typeManager.getAllType();
+                List<Category> allTypes = typeManager.getAllType();
 
                 List<Manufacturer> allManufacturers = manufacturerManager.getManufacturersList();
 
-                Set<ProductType> productTypes = requestProduct.getTypes();
+                Set<Category> productTypes = requestProduct.getCategories();
 
                 Set<Manufacturer> productManufacturers = requestProduct.getManufacturers();
 

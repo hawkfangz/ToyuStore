@@ -5,7 +5,6 @@
 package Entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;

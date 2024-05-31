@@ -7,7 +7,7 @@ package Controller;
 import Entity.Product;
 import Manager.ManufacturerManager;
 import Manager.ProductManager;
-import Manager.TypeManager;
+import Manager.CategoryManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -42,7 +42,7 @@ public class SearchController extends HttpServlet {
         String path = "product-result.jsp";
         int page;
         ProductManager productManager;
-        TypeManager typeManager;
+        CategoryManager typeManager;
         ManufacturerManager manufacturerManager;
 
         List<Product> result;
@@ -79,7 +79,7 @@ public class SearchController extends HttpServlet {
             request.setAttribute("result", result);
         }
         if (type.equals("type")) {
-            typeManager = new TypeManager();
+            typeManager = new CategoryManager();
             int id = Integer.parseInt(keyword);
             result = typeManager.getProductByType(id);
             request.setAttribute("result", result);
